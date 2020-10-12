@@ -3,5 +3,6 @@
 ## Quick instructions
 
 1. Clone repo
-2. Run `yarn dev`
-3. Open `http:\\localhost:3001` in browser
+2. Run `yarn install`
+3. Run `yarn dev`
+4. Open `http:\\localhost:3001` in browser
