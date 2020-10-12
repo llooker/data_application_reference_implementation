@@ -1,0 +1,16 @@
+# Example start script for consolidated all env variables required across multiple packages */
+
+trap 'kill $(jobs -p)' EXIT
+
+export PBL_PORT=3000
+export PBL_DEV_PORT=3001
+
+export LOOKERSDK_API_VERSION=4.0
+export LOOKERSDK_BASE_URL=https://your-instance.looker.com
+export LOOKERSDK_CLIENT_ID=xxxxxxxxxxxxxxxxxxxxxx
+export LOOKERSDK_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxxxxx
+
+export LOOKERSDK_EMBED_SECRET=xxxxxxxxxxxxxxxxxxxxxx
+
+# for production start scripts, change 'yarn dev' to 'yarn start'
+yarn dev
