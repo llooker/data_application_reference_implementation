@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import Example1 from './components/example1'
+import EmbedSDK from './components/EmbedSDK'
 import SelectExample from './components/SelectExample'
 
 import {
@@ -16,6 +17,7 @@ function App() {
         <Route path='/examples/google-login'>
           <Example1 />
         </Route>
+        <Route path='/examples/embed-sdk' component={EmbedSDK} />
         <Route path='/'>
           <SelectExample />
         </Route>

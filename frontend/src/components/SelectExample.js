@@ -19,6 +19,14 @@ const params = {
             public: 'lakshdsl',
         },
         text: 'SDK with Google Login'
+    },
+    {
+      url: 'examples/embed-sdk',
+      user: {
+          private: 'asldhfkshjdafl',
+          public: 'lakshdsl',
+      },
+      text: 'Basic Embed with SDK'
     }
   ]
 } 
