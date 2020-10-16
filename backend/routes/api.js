@@ -1,18 +1,19 @@
-import express from 'express'
+var express = require('express')
 
-import config from '../config' 
-import { createSignedUrl } from 'auth/auth_utils'
+var config = require('../config') 
+var createSignedUrl = require('../auth/auth_utils')
 
-let router = express.router
+var router = express.Router()
+
 // test endpoint
 router.get('/test', (req, res, next) => res.send(config.api.testResponse))
- 
-app.get('/auth', function(req, res) {
-  // Authenticate the request is from a valid user here
+
+// auth for creating an embed url
+router.get('/auth', (req, res) => {
   const src = req.query.src;
-  const host = 'https://looker.example.com'
-  const secret = YOUR_EMBED_SECRET
-  const user = authenticatedUser
+  const host = process.env.LOOKERSDK_BASE_URL
+  const secret = process.env.LOOKERSDK_EMBED_SECRET
+  const user = config.authenticatedUser
   const url = createSignedUrl(src, user, host, secret);
   res.json({ url });
 });

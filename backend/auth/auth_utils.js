@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-import * as createHmac from 'create-hmac'
+var createHmac = require('create-hmac')
 
 function stringify (params) {
   const result = []
@@ -71,7 +71,7 @@ function createNonce (len) {
   return text
 }
 
-export function createSignedUrl (
+function createSignedUrl (
   src,
   user,
   host,
@@ -121,3 +121,5 @@ export function createSignedUrl (
 
   return `https://${host}${embedPath}?${stringify(params)}`
 }
+
+module.exports = createSignedUrl
