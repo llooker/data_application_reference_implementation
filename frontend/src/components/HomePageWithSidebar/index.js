@@ -6,7 +6,7 @@ import Homepage from './Homepage'
 
 import { ComponentsProvider } from '@looker/components'
 
-const Example1 = (() => {
+const HomePageWithSidebar = (() => {
   let match = useRouteMatch();
   return(
     <ComponentsProvider>
@@ -15,4 +15,4 @@ const Example1 = (() => {
   )
 })
 
-export default Example1
+export default HomePageWithSidebar

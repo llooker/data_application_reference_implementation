@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Example1 from './components/example1'
+import HomePageWithSidebar from './components/HomePageWithSidebar'
 import EmbedSDK from './components/EmbedSDK'
 import {
   BrowserRouter as Router,
@@ -20,12 +20,12 @@ const params = {
         text: 'Embed with Google Login'
     },
     {
-        url: '/examples/google-login-sdk',
+        url: '/examples/homepage-sidebar',
         user: {
             private: 'asldhfkshjdafl',
             public: 'lakshdsl',
         },
-        text: 'SDK with Google Login'
+        text: 'Homepage with Sidebar'
     },
     {
       url: '/examples/embed-sdk',
@@ -63,7 +63,7 @@ function App() {
     <Router>
       <Switch>
         <Route path='/' component={SelectExample} exact />
-        <Route path='/examples/google-login' component={Example1} />
+        <Route path='/examples/homepage-sidebar' component={HomePageWithSidebar} />
         <Route path='/examples/embed-sdk' component={EmbedSDK} />
       </Switch>
     </Router>
