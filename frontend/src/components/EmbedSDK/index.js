@@ -4,7 +4,7 @@ import {
   Route
 } from "react-router-dom";
 import * as React from 'react'
-import Homepage from './Embed'
+import Embed from './Embed'
 
 import { ComponentsProvider } from '@looker/components'
 
@@ -12,7 +12,7 @@ const EmbedSDK = (() => {
   let match = useRouteMatch();
   return(
     <Switch>
-      <Route path={`${match.url}/`} component={Homepage} />
+      <Route path={`${match.url}/`} component={Embed} />
     </Switch>
   )
 })
