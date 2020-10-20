@@ -12,7 +12,7 @@ import styled from "styled-components"
 const params = {
   examples: [
     {    
-        url: 'examples/google-login',
+        url: '/examples/google-login',
         user: {
             private: 'asldhfkshjdafl',
             public: 'lakshdsl',
@@ -20,7 +20,7 @@ const params = {
         text: 'Embed with Google Login'
     },
     {
-        url: 'examples/google-login-sdk',
+        url: '/examples/google-login-sdk',
         user: {
             private: 'asldhfkshjdafl',
             public: 'lakshdsl',
@@ -28,7 +28,7 @@ const params = {
         text: 'SDK with Google Login'
     },
     {
-      url: 'examples/embed-sdk',
+      url: '/examples/embed-sdk',
       user: {
           private: 'asldhfkshjdafl',
           public: 'lakshdsl',
