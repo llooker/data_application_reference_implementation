@@ -62,7 +62,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path='/' component={SelectExample} />
+        <Route path='/' component={SelectExample} exact />
         <Route path='/examples/google-login' component={Example1} />
         <Route path='/examples/embed-sdk' component={EmbedSDK} />
       </Switch>
