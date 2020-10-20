@@ -14,7 +14,8 @@ module.exports = {
     port: process.env.PBL_DEV_PORT || 3001,
     proxy: {
       '/api': ['http://localhost', process.env.PBL_PORT || '3000'].join(':')
-    }
+    },
+    historyApiFallback: true
   },
   module: {
     rules: [
