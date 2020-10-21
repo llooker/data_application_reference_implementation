@@ -3,7 +3,6 @@ var NodeAPI = require('@looker/sdk/lib/node')
 var NodeSettings = require('@looker/sdk-rtl/lib/NodeSettings')
 var config = require('../config') 
 var createSignedUrl = require('../auth/auth_utils')
-
 var router = express.Router()
 
 // Init the Looker SDK using environment variables
@@ -20,6 +19,23 @@ router.get('/all_looks', async (req, res, next) => {
       .catch(e => console.log(e))
     res.send(looks)
     });
+  
+router.post('/look_data', async (req, res, next) => {
+  let target_look = req.body.look_id;
+  let query_data = await sdk.ok(
+    sdk.look(target_look, 'query'))
+    .catch(e => console.log(e))
+  delete query_data.client_id
+  // Pass this to a query constructor and get the results from inline query
+  
+  // let newQuery = SDKModels.IRequestRunInlineQuery(query_data);
+  // let query_results = await sdk.ok(
+  //   sdk.run_inline_query(newQuery)
+  // )
+  //   .catch(e => console.log(e))
+  //   console.log(query_results)
+  res.send([1,2,3])
+  });
 
 // test endpoint
 router.get('/test', (req, res, next) => res.send(config.api.testResponse))

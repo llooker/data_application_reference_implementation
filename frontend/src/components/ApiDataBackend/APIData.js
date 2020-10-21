@@ -33,15 +33,37 @@ const LookFetcher = () => {
 
 const FetchedLooks = (props) => {
     if (props.looks.length > 0) {
-        const looks = props.looks.map(look => {
-            <option key={look.id}>{look.name}</option>
-        });
+        let [looktoRender, changeRenderLook]  = useState(null);
+        let [showLook, toggleLookVisible]  = useState(false);
+        const renderLook = (event) => {
+            event.preventDefault();
+            let data = {look_id: looktoRender, foo:'bar'}
+            console.log(data)
+            fetch('/api/look_data', {
+                method:'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+            toggleLookVisible(!toggleLookVisible)
+        };
+        const changeLook = (event) => {
+            changeRenderLook(event.target.value)
+        };
         return (
         <>
-        <div>Choose one of these {props.looks.length} looks:</div>
-        <select>
-            {looks}
-        </select>
+        <form onSubmit={renderLook}>
+            <label>Choose one of these {props.looks.length} looks:
+            <select onChange={changeLook}>
+                {props.looks.map((look) => {
+                    return <option value={look.id} key={look.id}>({look.id}) {look.title}</option>
+                })}
+            </select>
+            </label>
+            <input type='submit' value='Render Data from selected look'/>
+        </form>
+        {(looktoRender && showLook) && <div id='renderedLook'>I am a rendered {looktoRender}</div>}
         </>
         )
      } else {
