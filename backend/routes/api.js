@@ -6,26 +6,23 @@ var createSignedUrl = require('../auth/auth_utils')
 
 var router = express.Router()
 
-
-// May be a better way to do this
-let sdk = null;
-const authLookerAPI = async () => {
-  return sdk ? sdk : NodeAPI.LookerNodeSDK.init31(new NodeSettings.NodeSettings())
-};
+// Init the Looker SDK using environment variables
+const sdk = NodeAPI.LookerNodeSDK.init31(new NodeSettings.NodeSettings());
 
 router.get('/current_user', async (req, res, next) => {
-  sdk = await authLookerAPI();
-  
   const me = await sdk.ok(sdk.me('id, first_name, last_name'))
     .catch(e => console.log(e))
-
-  res.json({ me })
-
+  res.send(me)
   });
 
+router.get('/all_looks', async (req, res, next) => {
+    const looks = await sdk.ok(sdk.all_looks('id,title,embed_url,query_id'))
+      .catch(e => console.log(e))
+    res.send(looks)
+    });
+
 // test endpoint
-router.get('/test', (req, res, next) => res.send(config.api.testResponse)
-  )
+router.get('/test', (req, res, next) => res.send(config.api.testResponse))
 
 // auth for creating an embed url
 router.get('/auth', (req, res) => {
