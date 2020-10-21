@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import HomePageWithSidebar from './components/HomePageWithSidebar'
 import EmbedSDK from './components/EmbedSDK'
+import APIDataContainer from './components/ApiDataBackend'
 import {
   BrowserRouter as Router,
   Switch,
@@ -34,6 +35,10 @@ const params = {
           public: 'lakshdsl',
       },
       text: 'Basic Embed with SDK'
+    },
+    {
+      text: 'API Data fetched from backend',
+      url: '/examples/api-data-backend'
     }
   ]
 } 
@@ -65,6 +70,7 @@ function App() {
         <Route path='/' component={SelectExample} exact />
         <Route path='/examples/homepage-sidebar' component={HomePageWithSidebar} />
         <Route path='/examples/embed-sdk' component={EmbedSDK} />
+        <Route path='/examples/api-data-backend' component={APIDataContainer} />
       </Switch>
     </Router>
   )
