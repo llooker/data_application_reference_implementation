@@ -70,7 +70,7 @@ const Homepage = () => {
       .then(res => res.text())
       .then(heading => setHeading(heading))
   })
-
+  
   return (
     <>
       <PageHeader

@@ -6,9 +6,20 @@ import React, { useEffect, useState } from 'react'
 // button to embed the selected look
 
 const APIData = () => {
+  const [userInfo, setUserInfo] = useState('')
+  useEffect(() => {
+    fetch('/api/current_user')
+      .then(res => res.text())
+      .then(userInfo => setUserInfo(userInfo))
+    fetch('/api/test')})
     return (
         <>
-        <div>Hi there</div>
+        <div>Hi there
+            <div>
+            {userInfo}
+            </div>
+            
+        </div>
         </>
     )
 }
