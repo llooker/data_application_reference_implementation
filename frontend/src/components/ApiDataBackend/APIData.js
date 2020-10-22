@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react'
-// data that loads with the page
-    // list of all folders
-// data that loads on a button press
-    // list of looks in the folder
-// button to embed the selected look
+import { Box, Button, Form, Heading, Select, Text, Space} from '@looker/components'
 
 const WelcomePanel = (props) => {
     const name = props.user ? props.user.first_name : '';
     return (
         <>
-        <div>Welcome {name}</div>
+        <Space m="small">
+        <Heading as="h2">Welcome {name}</Heading>
+        </Space>
         </>
     )
 }
@@ -25,7 +23,7 @@ const LookFetcher = () => {
       }
     return (
         <>
-        <button onClick={fetchLooks}>Fetch Looks!</button>
+        <Button onClick={fetchLooks}>Fetch Looks!</Button>
         {looks && <FetchedLooks looks={looks}/>}
         </>
     )
@@ -33,41 +31,63 @@ const LookFetcher = () => {
 
 const FetchedLooks = (props) => {
     if (props.looks.length > 0) {
-        let [looktoRender, changeRenderLook]  = useState(null);
+        let [looktoRender, changeRenderLook]  = useState('');
         let [showLook, toggleLookVisible]  = useState(false);
+        let [lookData, setLookData] = useState('{}');
+
+        const resetLook = (event) => {
+            event.preventDefault();
+            toggleLookVisible(false);
+            changeRenderLook('');
+        }
         const renderLook = (event) => {
             event.preventDefault();
-            let data = {look_id: looktoRender, foo:'bar'}
-            console.log(data)
+            
+            let data = {look_id: looktoRender}
             fetch('/api/look_data', {
-                method:'POST',
-                body: JSON.stringify(data),
-                headers: {
-                    'Content-type': 'application/json'
-                }
+                            method:'POST',
+                            body: JSON.stringify(data),
+                            headers: {
+                                'Content-type': 'application/json'
+                            }
+                        })
+            .then(res => res.json())
+            .then(data => {
+                setLookData(data)
+                toggleLookVisible(true)
+                return data
             })
-            toggleLookVisible(!toggleLookVisible)
+            .catch(e => console.log(e))
         };
         const changeLook = (event) => {
-            changeRenderLook(event.target.value)
+            changeRenderLook(event)
         };
         return (
         <>
-        <form onSubmit={renderLook}>
-            <label>Choose one of these {props.looks.length} looks:
-            <select onChange={changeLook}>
-                {props.looks.map((look) => {
-                    return <option value={look.id} key={look.id}>({look.id}) {look.title}</option>
-                })}
-            </select>
-            </label>
-            <input type='submit' value='Render Data from selected look'/>
-        </form>
-        {(looktoRender && showLook) && <div id='renderedLook'>I am a rendered {looktoRender}</div>}
+        <Form m="small" onSubmit={renderLook}>
+            <Text>Choose one of these {props.looks.length} looks:</Text>
+            <Select
+                onChange={changeLook}
+                value={looktoRender}
+                options={props.looks.map((look) => {
+                    return ({ value: look.id, label: look.title })
+                })} / >
+            <Button type='submit'>Render Data from selected look</Button>
+        </Form>
+        {(looktoRender && showLook) && 
+         <>
+            <Space m="medium">
+            {JSON.stringify(lookData)}
+            </Space>
+            <Space m="small">
+            <Button onClick={resetLook}> Reset </Button>
+            </Space>
+            </>
+        }
         </>
         )
      } else {
-            return <div></div>
+            return <Space></Space>
         }
 }
 
@@ -85,8 +105,10 @@ const APIData = () => {
     }, []);
     return (
         <>
+        <Box p='medium' m='large'>
         <WelcomePanel user={user}/>
         <LookFetcher />
+        </Box>
         </>
     )
 }
