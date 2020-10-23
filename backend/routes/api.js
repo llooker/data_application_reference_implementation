@@ -1,7 +1,6 @@
 var express = require('express')
 var config = require('../config') 
 var router = express.Router()
-var SDKModels = require('@looker/sdk/lib/sdk/3.1/models')
 var NodeAPI = require('@looker/sdk/lib/node')
 var NodeSettings = require('@looker/sdk-rtl/lib/NodeSettings')
 var createSignedUrl = require('../auth/auth_utils')
