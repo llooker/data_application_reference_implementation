@@ -8,20 +8,22 @@ var createSignedUrl = require('../auth/auth_utils')
 // Init the Looker SDK using environment variables
 const sdk = NodeAPI.LookerNodeSDK.init31(new NodeSettings.NodeSettings());
 
-router.get('/current_user', async (req, res, next) => {
+
+
+router.get('/me', async (req, res, next) => {
   const me = await sdk.ok(sdk.me('id, first_name, last_name'))
     .catch(e => console.log(e))
   res.send(me)
   });
 
-router.get('/all_looks', async (req, res, next) => {
+router.get('/looks', async (req, res, next) => {
     const looks = await sdk.ok(sdk.all_looks('id,title,embed_url,query_id'))
       .catch(e => console.log(e))
     res.send(looks)
     });
   
-router.post('/look_data', async (req, res, next) => {
-  let target_look = req.body.look_id;
+router.get('/looks/:id', async (req, res, next) => {
+  let target_look = req.params.id;
   let query_data = await sdk.ok(sdk.look(target_look, 'query'))
     .catch(e => console.log(e))
     delete query_data.query.client_id

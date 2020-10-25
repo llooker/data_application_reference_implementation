@@ -28,7 +28,7 @@ const WelcomePanel = (props) => {
 const LookFetcher = () => {
   const [looks, getLooks] = useState([]);
   const fetchLooks = () => {
-    fetch("/api/all_looks")
+    fetch("/api/looks")
       .then((res) => res.json())
       .then((looks) => {
         getLooks(looks);
@@ -55,15 +55,7 @@ const FetchedLooks = (props) => {
     };
     const renderLook = (event) => {
       event.preventDefault();
-
-      let data = { look_id: looktoRender };
-      fetch("/api/look_data", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-type": "application/json",
-        },
-      })
+      fetch(`/api/looks/${looktoRender}`)
         .then((res) => res.json())
         .then((data) => {
           setLookData(data);
@@ -103,7 +95,7 @@ const FetchedLooks = (props) => {
 const APIData = () => {
   const [user, setUser] = useState({});
   const fetchUser = () => {
-    fetch("/api/current_user")
+    fetch("/api/me")
       .then((res) => res.json())
       .then((user) => {
         setUser(user);
