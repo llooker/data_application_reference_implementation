@@ -32,8 +32,10 @@ router.get('/looks/:id', async (req, res, next) => {
     .catch(e => console.log(e))
 
   let newQueryResults = await sdk.ok(sdk.run_query({query_id: Number(newQuery.id), result_format: "json"}))
-    .catch(e => console.log(e))
-
+    .catch(e => {
+      console.log(e);
+      res.send({error: e.message});
+    })
   res.send(newQueryResults)
   });
 
