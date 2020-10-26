@@ -7,89 +7,105 @@ import {
   Select,
   Text,
   Space,
+  Status,
+  Spinner
 } from "@looker/components";
 
-// TODO -> Show spinner while data loading
-// TODO -> Pretty print JSON data or format as table
+// TODO -> Spinner message
 // TODO -> Show errors from API in page instead of console
+// TODO -> Pretty print JSON data or format as table
 
+const RenderLoading = () => {
+  return (<Space p="medium"><Spinner></Spinner></Space>)
+};
 
-const WelcomePanel = (props) => {
-  const name = props.user ? props.user.first_name : "";
-  return (
-    <>
-      <Space m="small">
-        <Heading as="h2">Welcome {name}</Heading>
-      </Space>
-    </>
-  );
+const RenderError = (props) => {
+  return (<Space p="small"><Status intent="critical" />{props.message}</Space>)
 };
 
 const LookFetcher = () => {
-  const [looks, getLooks] = useState([]);
+  const [error, setError] = useState('');
+  const [isLoading, setLoading] = useState(false);
+  const [looks, setLooks] = useState([]);
+  
   const fetchLooks = () => {
+    setLoading(true);
     fetch("/api/looks")
       .then((res) => res.json())
       .then((looks) => {
-        getLooks(looks);
-      });
+        setLooks(looks);
+        setLoading(false);
+      })
+      .catch(e => setError(String(e)));
   };
+
   return (
     <>
       <Button onClick={fetchLooks}>Fetch Looks!</Button>
+      {isLoading && <RenderLoading/>}
+      {error !== '' && <RenderError message={error}/>}
       {looks && <FetchedLooks looks={looks} />}
     </>
   );
 };
 
 const FetchedLooks = (props) => {
-  let [looktoRender, changeRenderLook] = useState("");
-  let [showLook, toggleLookVisible] = useState(false);
-  let [lookData, setLookData] = useState("{}");
+  const [error, setError] = useState('');
+  const [isLoading, setLoading] = useState(false);
+
+  const [looktoRender, chooseRenderLook] = useState("");
+  const [lookData, setLookData] = useState("{}");
 
   if (props.looks.length > 0) {
     const resetLook = (event) => {
       event.preventDefault();
-      toggleLookVisible(false);
-      changeRenderLook("");
+      setLoading(false);
+      setError('');
+      setLookData('{}');
     };
-    const renderLook = (event) => {
+
+    const RenderLook = (event) => {
       event.preventDefault();
+      resetLook(event);
+      setLoading(true);
       fetch(`/api/looks/${looktoRender}`)
         .then((res) => res.json())
         .then((data) => {
-          setLookData(data);
-          toggleLookVisible(true);
+          if ((data instanceof Array && data[0].looker_error) || (data instanceof Object && data.error)) {
+            let errorMsg = data instanceof Array ? data[0].looker_error : data.error;
+            let errorText = data.length > 1 ? `${errorMsg} and ${data.length - 1} other errors` :errorMsg;
+            setError(errorText);
+          } else {
+            setLookData(data);
+          }
+          setLoading(false);
           return data;
         })
-        .catch((e) => console.log(e));
+        .catch(e => {console.log(`unhandled:${e}`); setError(String(e))});
     };
     return (
       <>
-        <Form m="small" onSubmit={renderLook}>
+        <Form m="small" onSubmit={RenderLook}>
           <Text>Choose one of these {props.looks.length} looks:</Text>
           <Select
-            onChange={changeRenderLook}
+            onChange={chooseRenderLook}
             value={looktoRender}
-            options={props.looks.map((look) => {
-              return { value: look.id, label: look.title };
-            })}
+            options={props.looks.map((look) => {return { value: look.id, label: look.title }})}
           />
           <Button type="submit">Render Data from selected look</Button>
         </Form>
-        {looktoRender && showLook && (
+        {isLoading && <RenderLoading/>}
+        {error !== '' && <RenderError message={error}/>}
+        {lookData != '{}' && (
           <>
+            <Space m="small"><Button color="critical" onClick={resetLook}> Reset </Button></Space>
             <Space m="medium">{JSON.stringify(lookData)}</Space>
-            <Space m="small">
-              <Button onClick={resetLook}> Reset </Button>
-            </Space>
           </>
         )}
       </>
     );
-  } else {
-    return <Space></Space>;
-  }
+  } 
+  return <Space></Space>;
 };
 
 const APIData = () => {
@@ -97,20 +113,16 @@ const APIData = () => {
   const fetchUser = () => {
     fetch("/api/me")
       .then((res) => res.json())
-      .then((user) => {
-        setUser(user);
-      });
+      .then((user) => setUser(user));
   };
-  useEffect(() => {
-    fetchUser();
-  }, []);
+  useEffect(() => fetchUser(), []);
   return (
-    <>
       <Box p="medium" m="large">
-        <WelcomePanel user={user} />
+        <Space m="small">
+          {user && <Heading as="h2">Welcome {user.first_name}</Heading>}
+        </Space>
         <LookFetcher />
       </Box>
-    </>
   );
 };
 
