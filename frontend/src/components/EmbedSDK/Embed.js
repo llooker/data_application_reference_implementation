@@ -4,7 +4,7 @@ import { LookerEmbedSDK } from '@looker/embed-sdk'
 
 // create iframe of dashboard
 const DashboardDiv = (el) => {
-  LookerEmbedSDK.init(process.env.LOOKERSDK_EMBED_HOST, '/api/auth')
+  LookerEmbedSDK.init(process.env.LOOKERSDK_EMBED_HOST, '/api/embed/auth')
 
   LookerEmbedSDK.createDashboardWithId(1)
   .appendTo(el)

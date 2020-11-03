@@ -22,7 +22,7 @@ config.authenticatedUser = {
       "save_content",
       "embed_browse_spaces"
     ],
-    "models": ["baseball"],
+    "models": ["reference_implementation"],
     "user_attributes": { "locale": "en_US" }
   }
 
