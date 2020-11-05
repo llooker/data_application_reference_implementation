@@ -44,7 +44,7 @@ const params = {
     {
       text: 'Embed With API Example',
       url: '/examples/embed-api'
-    }
+    },
     {
       text: 'Cors',
       url: '/examples/cors'

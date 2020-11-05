@@ -6,7 +6,7 @@ import {
 import * as React from 'react'
 import CorsExampleComp from './CorsExampleComp'
 
-const EmbedWithApi = (() => {
+const CorsExample = (() => {
   let match = useRouteMatch();
   return(
     <Switch>

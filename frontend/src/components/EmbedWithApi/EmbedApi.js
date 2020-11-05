@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from "styled-components"
 import { LookerEmbedSDK } from '@looker/embed-sdk'
-import { CorsSessionHelper } from '../helpers/CorsSessionHelper'
 import { Looker40SDK, DefaultSettings } from "@looker/sdk";
 
 // create iframe of dashboard
@@ -24,20 +23,11 @@ const me = () => {
   .then(data => console.log(data));
 }
 
-const SDK = (accessToken) => {
-  const session = new CorsSessionHelper({
-    ...DefaultSettings(),
-    base_url: `https://dat.dev.looker.com:19999`,
-    accessToken
-  })
-
-  let sdk = new Looker40SDK(session);
-  return sdk;
-}
 
 const EmbedApi = () => {
   return (
     <>
+      <Button>Give permissions</Button>
       <div className='stuff' style={{width: '100%', height: '100%'}}>
         <Dashboard ref={DashboardDiv}></Dashboard>
       </div>
