@@ -61,4 +61,4 @@ exports.authenticatedUser = users[selected_user]
 exports.PBL_HOST = 'http://localhost:3001'
 exports.LOOKERSDK_BASE_URL = 'https://dat.dev.looker.com:19999'
 exports.LOOKER_EMBED_HOST = 'dat.dev.looker.com'
-exports.EmbedSDK_dashboard = 1
+exports.EmbedSDK_dashboard = 13
