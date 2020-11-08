@@ -9,6 +9,10 @@ import {
 import { sdk } from "../../helpers/CorsSessionHelper"
 
 
+/**
+ * Runs a simple query on load (to populate an HTML table)
+ * - Uses the Query API: https://docs.looker.com/reference/api-and-integration/api-reference/v4.0/query#run_inline_query
+ */
 const ClientSideDataQueryComponent = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -20,17 +24,23 @@ const ClientSideDataQueryComponent = () => {
     "view": "order_items",
     "fields": ["order_items.status", "order_items.total_sale_price"],
   }
+  const resultFormat = 'json'
 
   useEffect(() => {
-    runQuery()
+    runQuery(queryBody, resultFormat)
   })
   
-  const runQuery = async () => {
+  /**
+   * Gets data using a run_inline_query call
+   * @param {*} queryBody - Object matching the Query type. Required properties: model, view (explore), fields
+   * @param {*} resultFormat - Data response formats: json | json_detail | csv
+   */
+  const runQuery = async (queryBody, resultFormat) => {
     try {
       const queryResults = await sdk.ok(
         sdk.run_inline_query({
           body: queryBody, 
-          result_format: 'json'
+          result_format: resultFormat
         })
       )
       setDataset(queryResults)
