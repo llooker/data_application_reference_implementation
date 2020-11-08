@@ -23,8 +23,10 @@
  */
 
 import React from "react";
-import { IconButton } from "@looker/components";
 import styled from "styled-components";
+
+import { IconButton } from "@looker/components";
+
 
 const SidebarToggle = ({
   isOpen,

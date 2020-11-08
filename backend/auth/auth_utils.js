@@ -61,7 +61,7 @@ function signEmbedUrl (data, secret) {
 }
 
 function createNonce (len) {
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  const possible = process.env.PBL_NONCE
   let text = ''
 
   for (let i = 0; i < len; i++) {

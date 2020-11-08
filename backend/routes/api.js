@@ -1,9 +1,12 @@
 var express = require('express')
 var config = require('../config') 
 var router = express.Router()
+
 var NodeAPI = require('@looker/sdk/lib/node')
 var NodeSettings = require('@looker/sdk-rtl/lib/NodeSettings')
+
 var createSignedUrl = require('../auth/auth_utils')
+
 
 // Init the Looker SDK using environment variables
 const sdk = NodeAPI.LookerNodeSDK.init40(new NodeSettings.NodeSettings());
@@ -70,7 +73,7 @@ router.post('/embed-user/update', async (req, res) => {
 // auth for creating an embed url
 router.get('/auth', (req, res) => {
   const src = req.query.src;
-  const host = process.env.LOOKERSDK_EMBED_HOST // Might need to be different than API baseurl (port nums)
+  const host = process.env.LOOKERSDK_EMBED_HOST
   const secret = process.env.LOOKERSDK_EMBED_SECRET
   const user = config.authenticatedUser
   const url = createSignedUrl(src, user, host, secret);

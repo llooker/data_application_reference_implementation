@@ -1,6 +1,7 @@
 import { Looker40SDK, DefaultSettings } from "@looker/sdk";
 import { AuthToken, AuthSession, BrowserTransport } from "@looker/sdk-rtl";
 
+import config from '../config.js'
 
 class PblSession extends AuthSession {
 
@@ -45,14 +46,14 @@ class PblSession extends AuthSession {
 class PblSessionEmbed extends PblSession {
   fetchToken() {
     return fetch(
-      "/api/token?id=user1"
+      "/api/token?id=" + config.authenticatedUser.external_user_id
     );
   }
 }
 
 const session = new PblSessionEmbed({
   ...DefaultSettings,
-  base_url: `https://dat.dev.looker.com:19999`
+  base_url: config.LOOKERSDK_BASE_URL
 });
 
 export const sdk = new Looker40SDK(session);

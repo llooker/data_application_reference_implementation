@@ -4,7 +4,9 @@ import {
   Route
 } from "react-router-dom";
 import * as React from 'react'
+
 import CorsExampleComp from './CorsExampleComp'
+
 
 const CorsExample = (() => {
   let match = useRouteMatch();

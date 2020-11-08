@@ -1,13 +1,16 @@
 import React from 'react'
 import styled from "styled-components"
+
 import { LookerEmbedSDK } from '@looker/embed-sdk'
-import { Looker40SDK, DefaultSettings } from "@looker/sdk";
+
+import config from '../../config.js'
+
 
 // create iframe of dashboard
 const DashboardDiv = (el) => {
-  LookerEmbedSDK.init(process.env.API_HOST, '/api/embed/auth')
+  LookerEmbedSDK.init(config.LOOKER_EMBED_HOST, '/api/auth')
 
-  LookerEmbedSDK.createDashboardWithId(13)
+  LookerEmbedSDK.createDashboardWithId(config.EmbedSDK_dashboard)
   .appendTo(el)
   .build()
   .connect()
@@ -18,7 +21,7 @@ const DashboardDiv = (el) => {
 }
 
 const me = () => {
-  fetch('http://localhost:3001/api/auth?id=user1')
+  fetch(config.PBL_HOST + '/api/auth?id=' + config.authenticatedUser.external_user_id)
   .then(response => response.json())
   .then(data => console.log(data));
 }
@@ -27,7 +30,6 @@ const me = () => {
 const EmbedApi = () => {
   return (
     <>
-      <Button>Give permissions</Button>
       <div className='stuff' style={{width: '100%', height: '100%'}}>
         <Dashboard ref={DashboardDiv}></Dashboard>
       </div>

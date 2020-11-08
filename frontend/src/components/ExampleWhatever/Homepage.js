@@ -16,6 +16,7 @@ import { palette } from '@looker/design-tokens'
 
 import SidebarToggle from './SidebarToggle'
 
+
 const params = {
   title: 'Title from Homepage.js',
   headerColor: palette.blue200,

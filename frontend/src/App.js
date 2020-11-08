@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import HomePageWithSidebar from './components/HomePageWithSidebar'
-import EmbedSDK from './components/EmbedSDK'
-import EmbedWithApi from './components/EmbedWithApi'
-import APIDataContainer from './components/ApiDataBackend'
-import CorsExample from './components/CorsExample'
+import React from 'react'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from "react-router-dom";
+
+import HomePageWithSidebar from './components/HomePageWithSidebar'
+import EmbedSDK from './components/EmbedSDK'
+import EmbedWithApi from './components/EmbedWithApi'
+import APIDataContainer from './components/ApiDataBackend'
+import CorsExample from './components/CorsExample'
+
 
 const params = {
   examples: [

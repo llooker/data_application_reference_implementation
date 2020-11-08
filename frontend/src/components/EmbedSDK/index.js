@@ -4,9 +4,11 @@ import {
   Route
 } from "react-router-dom";
 import * as React from 'react'
-import Embed from './Embed'
 
 import { ComponentsProvider } from '@looker/components'
+
+import Embed from './Embed'
+
 
 const EmbedSDK = (() => {
   let match = useRouteMatch();

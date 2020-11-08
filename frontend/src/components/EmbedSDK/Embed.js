@@ -1,12 +1,16 @@
 import React from 'react'
 import styled from "styled-components"
+
 import { LookerEmbedSDK } from '@looker/embed-sdk'
+
+import config from '../../config.js'
+
 
 // create iframe of dashboard
 const DashboardDiv = (el) => {
-  LookerEmbedSDK.init(process.env.LOOKERSDK_EMBED_HOST, '/api/embed/auth')
+  LookerEmbedSDK.init(process.env.LOOKER_EMBED_HOST, '/api/auth')
 
-  LookerEmbedSDK.createDashboardWithId(1)
+  LookerEmbedSDK.createDashboardWithId(config.EmbedSDK_dashboard)
   .appendTo(el)
   .build()
   .connect()
