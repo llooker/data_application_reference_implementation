@@ -3,15 +3,18 @@ import { AuthToken, AuthSession, BrowserTransport } from "@looker/sdk-rtl";
 
 import config from '../config.js'
 
+
 class PblSession extends AuthSession {
-
-  fetchToken() {
-    return fetch("");
-  }
-
-  activeToken = new AuthToken();
   constructor(settings, transport) {
     super(settings, transport || new BrowserTransport(settings));
+
+    this.activeToken = new AuthToken();
+  }
+
+  fetchToken() {
+    return fetch (
+      "/api/token?id=" + config.authenticatedUser.external_user_id
+    );
   }
   
   isAuthenticated() {
@@ -43,15 +46,7 @@ class PblSession extends AuthSession {
   }
 }
 
-class PblSessionEmbed extends PblSession {
-  fetchToken() {
-    return fetch(
-      "/api/token?id=" + config.authenticatedUser.external_user_id
-    );
-  }
-}
-
-const session = new PblSessionEmbed({
+const session = new PblSession({
   ...DefaultSettings,
   base_url: config.LOOKERSDK_BASE_URL
 });
