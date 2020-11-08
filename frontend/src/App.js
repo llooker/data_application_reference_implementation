@@ -11,6 +11,7 @@ import EmbedSDK from './components/EmbedSDK'
 import EmbedWithApi from './components/EmbedWithApi'
 import APIDataContainer from './components/ApiDataBackend'
 import CorsExample from './components/CorsExample'
+import ClientSideDataQuery from './components/ClientSideDataQuery'
 
 
 const params = {
@@ -50,6 +51,10 @@ const params = {
     {
       text: 'Cors',
       url: '/examples/cors'
+    },
+    {
+      text: 'Client Side Data Query',
+      url: '/examples/client-side-data-query'
     }
   ]
 } 
@@ -84,6 +89,7 @@ function App() {
         <Route path='/examples/api-data-backend' component={APIDataContainer} />
         <Route path='/examples/embed-api' component={EmbedWithApi} />
         <Route path='/examples/cors' component={CorsExample} />
+        <Route path='/examples/client-side-data-query' component={ClientSideDataQuery} />
       </Switch>
     </Router>
   )
