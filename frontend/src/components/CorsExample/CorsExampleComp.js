@@ -1,5 +1,4 @@
 import React from 'react'
-import { Looker40SDK, DefaultSettings } from "@looker/sdk";
 import { sdk } from "../../helpers/CorsSessionHelper"
 
 
@@ -9,6 +8,7 @@ const CorsExampleComp = () => {
   return (
     <>
       <div className='stuff' style={{width: '100%', height: '100%'}}>
+        { me.display_name }
       </div>
     </>
   )

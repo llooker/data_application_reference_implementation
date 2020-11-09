@@ -46,7 +46,7 @@ router.get('/test', (req, res, next) => res.send(config.api.testResponse))
 // /api/auth - get signed emebed url
 
 // auth for creating an api auth token
-router.get('/token', async (req, res) => {
+router.get('/embed-user/token', async (req, res) => {
   const userCred = await sdk.ok(sdk.user_for_credential('embed', req.query.id));
   const embed_user_token = await sdk.login_user(userCred.id.toString())
   const u = {

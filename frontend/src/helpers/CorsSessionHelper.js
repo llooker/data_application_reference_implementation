@@ -45,7 +45,7 @@ class PblSession extends AuthSession {
 class PblSessionEmbed extends PblSession {
   fetchToken() {
     return fetch(
-      "/api/token?id=user1"
+      "/api/embed-user/token?id=user1"
     );
   }
 }
