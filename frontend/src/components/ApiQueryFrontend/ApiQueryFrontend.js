@@ -13,7 +13,7 @@ import { sdk } from "../../helpers/CorsSessionHelper"
  * Runs a simple query on load (to populate an HTML table)
  * - Uses the Query API: https://docs.looker.com/reference/api-and-integration/api-reference/v4.0/query#run_inline_query
  */
-const ClientSideDataQueryComponent = () => {
+const ApiQueryFrontendComponent = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
@@ -69,4 +69,4 @@ const RenderError = (props) => {
 };
 
 
-export default ClientSideDataQueryComponent
+export default ApiQueryFrontendComponent
