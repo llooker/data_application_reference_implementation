@@ -15,14 +15,23 @@ import {
 // TODO -> Show errors from API in page instead of console
 // TODO -> Pretty print JSON data or format as table
 
+/**
+ * Render a spinner while data is fetched
+ */
 const RenderLoading = () => {
   return (<Space p="medium"><Spinner></Spinner></Space>)
 };
-
+/**
+ * Render an error message
+ * @param {Object} props - Properties from the parent component.
+ * @param {string} props.message - The error message text to display.
+ */
 const RenderError = (props) => {
   return (<Space p="small"><Status intent="critical" />{props.message}</Space>)
 };
-
+/**
+ * An component fragment that provides a button to fetch a list of Looks from the backend.
+ */
 const LookFetcher = () => {
   const [error, setError] = useState('');
   const [isLoading, setLoading] = useState(false);
@@ -48,8 +57,18 @@ const LookFetcher = () => {
     </>
   );
 };
-
+/**
+ * @param  {Object} props - Properties from the parent component.
+ * @param  {Array} props.looks - Array of look objects returned by API
+ * @param  {number} props.looks[].id - Unique ID of the Look
+ * @param  {string} props.looks[].title - Title of the Look
+ * @param  {string} props.looks[].embed_url - Embed URL of the Look
+ * @param  {string} props.looks[].query_id - Underlying query ID of the look
+ */
 const FetchedLooks = (props) => {
+  /**
+   * @param  {string} error - State handler to set error message text
+   */
   const [error, setError] = useState('');
   const [isLoading, setLoading] = useState(false);
 
@@ -57,13 +76,22 @@ const FetchedLooks = (props) => {
   const [lookData, setLookData] = useState("{}");
 
   if (props.looks.length > 0) {
+    /**
+     * Resets state for loading, errors and any look data 
+     * Note - this is not really public - just a test
+     * @param  {object} event
+     * @public
+     */
     const resetLook = (event) => {
       event.preventDefault();
       setLoading(false);
       setError('');
       setLookData('{}');
     };
-
+    /**
+     * Resets state and fetches new data from the API for a specific look ID 
+     * @param  {object} event - event fired by the Component.
+     */
     const RenderLook = (event) => {
       event.preventDefault();
       resetLook(event);
@@ -107,7 +135,9 @@ const FetchedLooks = (props) => {
   } 
   return <Space></Space>;
 };
-
+/**
+ * Render the main page component
+ */
 const APIData = () => {
   const [user, setUser] = useState({});
   const fetchUser = () => {
