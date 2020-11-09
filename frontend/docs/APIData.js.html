@@ -1,4 +1,32 @@
-import React, { useEffect, useState } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: APIData.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: APIData.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -19,7 +47,7 @@ import {
  * Render a spinner while data is fetched
  */
 const RenderLoading = () => {
-  return (<Space p="medium"><Spinner></Spinner></Space>)
+  return (&lt;Space p="medium">&lt;Spinner>&lt;/Spinner>&lt;/Space>)
 };
 /**
  * Render an error message
@@ -27,7 +55,7 @@ const RenderLoading = () => {
  * @param {string} props.message - The error message text to display.
  */
 const RenderError = (props) => {
-  return (<Space p="small"><Status intent="critical" />{props.message}</Space>)
+  return (&lt;Space p="small">&lt;Status intent="critical" />{props.message}&lt;/Space>)
 };
 /**
  * An component fragment that provides a button to fetch a list of Looks from the backend.
@@ -49,12 +77,12 @@ const LookFetcher = () => {
   };
 
   return (
-    <>
-      <Button onClick={fetchLooks}>Fetch Looks!</Button>
-      {isLoading && <RenderLoading/>}
-      {error !== '' && <RenderError message={error}/>}
-      {looks && <FetchedLooks looks={looks} />}
-    </>
+    &lt;>
+      &lt;Button onClick={fetchLooks}>Fetch Looks!&lt;/Button>
+      {isLoading &amp;&amp; &lt;RenderLoading/>}
+      {error !== '' &amp;&amp; &lt;RenderError message={error}/>}
+      {looks &amp;&amp; &lt;FetchedLooks looks={looks} />}
+    &lt;/>
   );
 };
 /**
@@ -99,7 +127,7 @@ const FetchedLooks = (props) => {
       fetch(`/api/looks/${looktoRender}`)
         .then((res) => res.json())
         .then((data) => {
-          if ((data instanceof Array && data[0].looker_error) || (data instanceof Object && data.error)) {
+          if ((data instanceof Array &amp;&amp; data[0].looker_error) || (data instanceof Object &amp;&amp; data.error)) {
             let errorMsg = data instanceof Array ? data[0].looker_error : data.error;
             let errorText = data.length > 1 ? `${errorMsg} and ${data.length - 1} other errors` :errorMsg;
             setError(errorText);
@@ -112,28 +140,28 @@ const FetchedLooks = (props) => {
         .catch(e => {console.log(`unhandled:${e}`); setError(String(e))});
     };
     return (
-      <>
-        <Form m="small" onSubmit={RenderLook}>
-          <Text>Choose one of these {props.looks.length} looks:</Text>
-          <Select
+      &lt;>
+        &lt;Form m="small" onSubmit={RenderLook}>
+          &lt;Text>Choose one of these {props.looks.length} looks:&lt;/Text>
+          &lt;Select
             onChange={chooseRenderLook}
             value={looktoRender}
             options={props.looks.map((look) => {return { value: look.id, label: look.title }})}
           />
-          <Button type="submit">Render Data from selected look</Button>
-        </Form>
-        {isLoading && <RenderLoading/>}
-        {error !== '' && <RenderError message={error}/>}
-        {lookData != '{}' && (
-          <>
-            <Space m="small"><Button color="critical" onClick={resetLook}> Reset </Button></Space>
-            <Space m="medium">{JSON.stringify(lookData)}</Space>
-          </>
+          &lt;Button type="submit">Render Data from selected look&lt;/Button>
+        &lt;/Form>
+        {isLoading &amp;&amp; &lt;RenderLoading/>}
+        {error !== '' &amp;&amp; &lt;RenderError message={error}/>}
+        {lookData != '{}' &amp;&amp; (
+          &lt;>
+            &lt;Space m="small">&lt;Button color="critical" onClick={resetLook}> Reset &lt;/Button>&lt;/Space>
+            &lt;Space m="medium">{JSON.stringify(lookData)}&lt;/Space>
+          &lt;/>
         )}
-      </>
+      &lt;/>
     );
   } 
-  return <Space></Space>;
+  return &lt;Space>&lt;/Space>;
 };
 /**
  * Render the main page component
@@ -147,13 +175,36 @@ const APIData = () => {
   };
   useEffect(() => fetchUser(), []);
   return (
-      <Box p="medium" m="large">
-        <Space m="small">
-          {user && <Heading as="h2">Welcome {user.first_name}</Heading>}
-        </Space>
-        <LookFetcher />
-      </Box>
+      &lt;Box p="medium" m="large">
+        &lt;Space m="small">
+          {user &amp;&amp; &lt;Heading as="h2">Welcome {user.first_name}&lt;/Heading>}
+        &lt;/Space>
+        &lt;LookFetcher />
+      &lt;/Box>
   );
 };
 
 export default APIData;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#APIData">APIData</a></li><li><a href="global.html#FetchedLooks">FetchedLooks</a></li><li><a href="global.html#LookFetcher">LookFetcher</a></li><li><a href="global.html#RenderError">RenderError</a></li><li><a href="global.html#RenderLoading">RenderLoading</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Nov 09 2020 14:42:22 GMT+0000 (Greenwich Mean Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
