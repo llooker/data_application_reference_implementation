@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from "styled-components"
 import { LookerEmbedSDK } from '@looker/embed-sdk'
-import { sdk } from "../../helpers/CorsSessionHelper"
 
-// create iframe of dashboard
+/**
+ * First initialized the embed sdk using the endpoint in /backend/routes/api.js
+ * Gets dashboard with ID 13, can be found in the url by going to the dashboard in your looker instance
+ * @param {Object} el The Dom object from Dashboard component 
+ */
 const DashboardDiv = (el) => {
   LookerEmbedSDK.init(process.env.API_HOST, '/api/auth')
 
@@ -16,16 +19,18 @@ const DashboardDiv = (el) => {
   })
 }
 
+/**
+ * Calls our internal API at /backend/routes/api.js to update the embed users permissions
+ * Reloads the dashboard
+ */
 const updateAttributes = async () => {
-  const me = await sdk.ok(sdk.me())
-  console.log(me)
-  const attrs = {
-    value: "Jeans",
-  }
-  await sdk.ok(sdk.set_user_attribute_user_value(me.id, 23, attrs))
+  await fetch('/api/embed-user/user1/update', { method: 'POST' })
   reloadDashboard()
 }
 
+/**
+ * Users the built in messaging of the dashboard embed to tell it to reload
+ */
 const reloadDashboard = () => {
   const my_iframe = document.querySelector("#lookerdashboard iframe");
   const my_request = JSON.stringify({ type: "dashboard:run" })
@@ -35,7 +40,7 @@ const reloadDashboard = () => {
 const EmbedApi = () => {
   return (
     <>
-      <button onClick={() => updateAttributes()}>Give permissions</button>
+      <button onClick={() => updateAttributes()}>Change User Attribute</button>
       <div className='stuff' style={{width: '100%', height: '100%'}}>
         <Dashboard ref={DashboardDiv} id="lookerdashboard"></Dashboard>
       </div>

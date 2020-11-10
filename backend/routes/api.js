@@ -57,14 +57,13 @@ router.get('/embed-user/token', async (req, res) => {
 });
 
 // update the embed users permissions
-router.post('/embed-user/update', async (req, res) => {
-  const userCred = await sdk.ok(sdk.user_for_credential('embed', req.query.id));
-  const embed_user_token = await sdk.login_user(userCred.id.toString())
-  const u = {
-    api_user_token: embed_user_token.value,
-    api_token_last_refreshed: Date.now()
+router.post('/embed-user/:id/update', async (req, res) => {
+  const userCred = await sdk.ok(sdk.user_for_credential('embed', req.params.id));
+  const attrs = {
+    value: "Jeans",
   }
-  res.json({ user: u });
+  await sdk.set_user_attribute_user_value(userCred.id, 23, attrs)
+  res.json({ status: 'updated' });
 });
 
 // auth for creating an embed url
