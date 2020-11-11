@@ -1,4 +1,5 @@
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 
 const BACKEND_LOCATION = path.join(__dirname, '../backend/public/js');
 
@@ -42,4 +43,7 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new Dotenv()
+  ]
 };
