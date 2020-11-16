@@ -52,7 +52,7 @@ class PblSessionEmbed extends PblSession {
 
 const session = new PblSessionEmbed({
   ...DefaultSettings,
-  base_url: `https://dat.dev.looker.com:19999`
+  base_url: process.env.LOOKER_API_HOST
 });
 
 export const sdk = new Looker40SDK(session);

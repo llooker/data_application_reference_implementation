@@ -5,7 +5,9 @@ var config = require('../config.js')
 require('dotenv').config()
 
 
-// auth user for testing embeds
+/**
+ * For all available permissions see https://docs.looker.com/reference/embedding/sso-embed#permissions
+ */
 config.authenticatedUser = {
     "external_user_id": "user1",
     "first_name": "Pat",
