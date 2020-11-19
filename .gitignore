@@ -4,3 +4,8 @@ yarn.lock
 yarn-error.log
 *.bundle.js
 start
+docs/_site
+docs/.sass-cache
+docs/.jekyll-cache
+docs/.jekyll-metadata
+docs/vender
