@@ -42,6 +42,10 @@ const params = {
       url: '/examples/api-data-backend'
     },
     {
+      text: 'Frontend Data Query',
+      url: '/examples/api-query-frontend'
+    },
+    {
       text: 'Embed With API Example',
       url: '/examples/embed-api'
     },
@@ -80,6 +84,7 @@ function App() {
         <Route path='/examples/homepage-sidebar' component={HomePageWithSidebar} />
         <Route path='/examples/embed-sdk' component={EmbedSDK} />
         <Route path='/examples/api-data-backend' component={APIDataContainer} />
+        <Route path='/examples/api-query-frontend' component={ApiQueryFrontend} />
         <Route path='/examples/embed-api' component={EmbedWithApi} />
         <Route path='/examples/cors' component={CorsExample} />
       </Switch>
