@@ -3,6 +3,7 @@ import HomePageWithSidebar from './components/HomePageWithSidebar'
 import EmbedSDK from './components/EmbedSDK'
 import EmbedWithApi from './components/EmbedWithApi'
 import APIDataContainer from './components/ApiDataBackend'
+import ApiQueryFrontend from './components/ApiQueryFrontend'
 import CorsExample from './components/CorsExample'
 import {
   BrowserRouter as Router,
@@ -40,6 +41,10 @@ const params = {
     {
       text: 'API Data fetched from backend',
       url: '/examples/api-data-backend'
+    },
+    {
+      text: 'Frontend Data Query',
+      url: '/examples/api-query-frontend'
     },
     {
       text: 'Embed With API Example',
@@ -80,6 +85,7 @@ function App() {
         <Route path='/examples/homepage-sidebar' component={HomePageWithSidebar} />
         <Route path='/examples/embed-sdk' component={EmbedSDK} />
         <Route path='/examples/api-data-backend' component={APIDataContainer} />
+        <Route path='/examples/api-query-frontend' component={ApiQueryFrontend} />
         <Route path='/examples/embed-api' component={EmbedWithApi} />
         <Route path='/examples/cors' component={CorsExample} />
       </Switch>
