@@ -3,6 +3,7 @@ import HomePageWithSidebar from './components/HomePageWithSidebar'
 import EmbedSDK from './components/EmbedSDK'
 import EmbedWithApi from './components/EmbedWithApi'
 import APIDataContainer from './components/ApiDataBackend'
+import ApiQueryFrontend from './components/ApiQueryFrontend'
 import CorsExample from './components/CorsExample'
 import {
   BrowserRouter as Router,
