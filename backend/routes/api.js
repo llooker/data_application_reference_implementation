@@ -31,6 +31,7 @@ router.get('/run_look/:id/:format', async (req, res, next) => {
 
   // TODO - Test this
   // TODO - make a query based on fields (for explore)
+  // Split up functions to match Looker API
 router.get('/run_inline_query/:id/:format', async (req, res, next) => {
   let query_data = await sdk.ok(sdk.query(req.params.id))
     .catch(e => console.log(e))
