@@ -33,7 +33,7 @@ const RenderError = (props) => {
 /**
  * An component fragment that provides a button to fetch a list of Looks from the backend.
  */
-const QueryFromLook = () => {
+const LookFetcher = () => {
   const [error, setError] = useState('');
   const [isLoading, setLoading] = useState(false);
   const [looks, setLooks] = useState([]);
@@ -74,7 +74,7 @@ const FetchedLooks = (props) => {
   const [isLoading, setLoading] = useState(false);
 
   const [looktoRender, chooseRenderLook] = useState("");
-  const [queryData, setQueryData] = useState("{}");
+  const [lookData, setLookData] = useState("{}");
 
   if (props.looks.length > 0) {
     /**
@@ -87,13 +87,13 @@ const FetchedLooks = (props) => {
       event.preventDefault();
       setLoading(false);
       setError('');
-      setQueryData('{}');
+      setLookData('{}');
     };
     /**
      * Resets state and fetches new data from the API for a specific look ID 
      * @param  {object} event - event fired by the Component.
      */
-    const RenderQueryFromLook = (event) => {
+    const RenderLook = (event) => {
       event.preventDefault();
       resetData(event);
       setLoading(true);
@@ -105,7 +105,7 @@ const FetchedLooks = (props) => {
             let errorText = data.length > 1 ? `${errorMsg} and ${data.length - 1} other errors` :errorMsg;
             setError(errorText);
           } else {
-            setQueryData(data);
+            setLookData(data);
           }
           setLoading(false);
           return data;
@@ -114,7 +114,7 @@ const FetchedLooks = (props) => {
     };
     return (
       <>
-    <Form m="small" onSubmit={RenderQueryFromLook}>
+    <Form m="small" onSubmit={RenderLook}>
           <Text>Choose one of these {props.looks.length} looks:</Text>
           <Select
             onChange={chooseRenderLook}
@@ -125,10 +125,10 @@ const FetchedLooks = (props) => {
         </Form>
         {isLoading && <RenderLoading/>}
         {error !== '' && <RenderError message={error}/>}
-        {queryData != '{}' && (
+        {lookData != '{}' && (
           <>
             <Space m="small"><Button color="critical" onClick={resetData}> Reset </Button></Space>
-            <Space m="medium"><QueryTable data={queryData}/></Space>
+            <Space m="medium"><QueryTable data={lookData}/></Space>
           </>
         )}
       </>
@@ -152,7 +152,7 @@ const APIData = () => {
         <Space m="small">
           {user && <Heading as="h2">Welcome {user.first_name}</Heading>}
         </Space>
-        <QueryFromLook />
+        <LookFetcher />
       </Box>
   );
 };
