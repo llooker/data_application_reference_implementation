@@ -97,7 +97,7 @@ const FetchedLooks = (props) => {
       event.preventDefault();
       resetData(event);
       setLoading(true);
-      fetch(`/api/looks/${looktoRender}`)
+      fetch(`/api/run_look/${looktoRender}/json`)
         .then((res) => res.json())
         .then((data) => {
           if ((data instanceof Array && data[0].looker_error) || (data instanceof Object && data.error)) {

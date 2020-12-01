@@ -20,22 +20,43 @@ router.get('/looks', async (req, res, next) => {
     res.send(looks)
     });
   
-router.get('/looks/:id', async (req, res, next) => {
-  let target_look = req.params.id;
-  let query_data = await sdk.ok(sdk.look(target_look, 'query'))
+router.get('/run_look/:id/:format', async (req, res, next) => {
+  let response_data = await sdk.ok(sdk.run_look({look_id: Number(req.params.id), result_format: req.params.format}))
+    .catch(e => {
+      res.send({error: e.message});
+    })
+  res.send(response_data)
+  });
+
+
+  // TODO - Test this
+  // TODO - make a query based on fields (for explore)
+router.get('/run_inline_query/:id/:format', async (req, res, next) => {
+  let query_data = await sdk.ok(sdk.query(req.params.id))
     .catch(e => console.log(e))
-    delete query_data.query.client_id
+  
+  delete query_data.query.client_id
 
   let newQuery = await sdk.ok(sdk.create_query(query_data.query))
     .catch(e => console.log(e))
 
-  let newQueryResults = await sdk.ok(sdk.run_query({query_id: Number(newQuery.id), result_format: "json"}))
+  let newQueryResults = await sdk.ok(sdk.run_query(
+      {
+        query_id: Number(newQuery.id),
+        result_format: req.params.format
+      }
+    ))
     .catch(e => {
       console.log(e);
-      res.send({error: e.message});
+      res.send(
+        {
+          error: e.message
+        }
+        );
     })
   res.send(newQueryResults)
-  });
+});
+
 
 // test endpoint
 router.get('/test', (req, res, next) => res.send(config.api.testResponse))
