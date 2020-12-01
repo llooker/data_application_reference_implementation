@@ -10,6 +10,7 @@ import {
   Status,
   Spinner
 } from "@looker/components";
+import { QueryTable } from '../common/QueryDataTable'
 
 // TODO -> Spinner message
 // TODO -> Show errors from API in page instead of console
@@ -127,7 +128,7 @@ const FetchedLooks = (props) => {
         {lookData != '{}' && (
           <>
             <Space m="small"><Button color="critical" onClick={resetLook}> Reset </Button></Space>
-            <Space m="medium">{JSON.stringify(lookData)}</Space>
+            <Space m="medium"><QueryTable data={lookData}/></Space>
           </>
         )}
       </>

@@ -5,13 +5,16 @@ import {
 } from "react-router-dom";
 import * as React from 'react'
 import EmbedApi from './EmbedApi'
+import { ComponentsProvider } from '@looker/components'
 
 const EmbedWithApi = (() => {
   let match = useRouteMatch();
   return(
-    <Switch>
-      <Route path={`${match.url}/`} component={EmbedApi} />
-    </Switch>
+    <ComponentsProvider>
+      <Switch>
+        <Route path={`${match.url}/`} component={EmbedApi} />
+      </Switch>
+    </ComponentsProvider>
   )
 })
 
