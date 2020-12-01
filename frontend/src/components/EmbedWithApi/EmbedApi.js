@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { LookerEmbedSDK } from '@looker/embed-sdk'
 import { sdk } from "../../helpers/CorsSessionHelper"
-
+import { QueryTable } from '../common/QueryDataTable'
 
 function EmbedApi() {
 
@@ -76,11 +76,7 @@ function EmbedApi() {
           <div id="lookerdashboard" style={{width: '100%', height: '100%'}}></div>
         </div>
         <div className="query-data" style={{width: '49%', height: '100%'}}>
-          <ul style={{ listStyleType: 'none' }}>
-            {(queryData).map(row => {
-              return(<li>{row['products.brand']} - {row['products.name']}</li>)
-            })}
-          </ul>
+          {(queryData) !== [] && <QueryTable data={queryData}/>}
         </div>
       </div>
     </>
