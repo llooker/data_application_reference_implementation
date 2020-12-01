@@ -1,4 +1,5 @@
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 
 const BACKEND_LOCATION = path.join(__dirname, '../backend/public/js');
 
@@ -14,7 +15,13 @@ module.exports = {
     port: process.env.PBL_DEV_PORT || 3001,
     proxy: {
       '/api': ['http://localhost', process.env.PBL_PORT || '3000'].join(':')
-    }
+    },
+    historyApiFallback: true
+  },
+  node: {
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
   },
   module: {
     rules: [
@@ -26,11 +33,17 @@ module.exports = {
           options: {
             "presets": [
               "@babel/preset-env", 
-              "@babel/preset-react"
+              "@babel/preset-react",
+              {
+                'plugins': ["@babel/plugin-transform-runtime", '@babel/plugin-proposal-class-properties']
+              }
             ]
           }
         }
       }
     ]
   },
+  plugins: [
+    new Dotenv()
+  ]
 };

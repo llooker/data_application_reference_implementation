@@ -10,3 +10,5 @@ docs/.jekyll-cache
 docs/.jekyll-metadata
 docs/vender
 .env
+backend/.env
+frontend/.env
