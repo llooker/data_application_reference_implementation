@@ -1,14 +1,7 @@
 # Basics
 
-## Embedding Examples
-* [Embedding A Dashboard](https://llooker.github.io/data_application_reference_implementation/)
-* [Embedding an Explore](https://llooker.github.io/data_application_reference_implementation/)
-* [Embedding a Look](https://llooker.github.io/data_application_reference_implementation/)
+Learn the basics of embedding looks, explores, and dashboards. Server side authentication and embed url signing included.
 
-## API Examples
-* [Create Data Table From Query](https://llooker.github.io/data_application_reference_implementation/)
-* [Fetching Data with CORS](https://llooker.github.io/data_application_reference_implementation/)
-
-## Auth Examples
-* [Creating a Signed Embed URL](https://llooker.github.io/data_application_reference_implementation/)
-* [Getting Embed User Creds for CORS](https://llooker.github.io/data_application_reference_implementation/)
+* [Authentication Examples](https://llooker.github.io/data_application_reference_implementation/basic/authentication)
+* [API Examples](https://llooker.github.io/data_application_reference_implementation/basic/api)
+* [Embedding Examples](https://llooker.github.io/data_application_reference_implementation/basic/embedding)
