@@ -12,10 +12,10 @@ config.authenticatedUser = {
     "external_user_id": "user1",
     "first_name": "Pat",
     "last_name": "Embed",
-    "session_length": 3600,
+    "session_length": 600,
     "force_logout_login": true,
-    "external_group_id": "group1",
-    "group_ids": [],
+    "external_group_id": "passing_an_id",
+    "group_ids": [4],
     "permissions": [
       "access_data",
       "see_looks",
@@ -24,7 +24,7 @@ config.authenticatedUser = {
       "save_content",
       "embed_browse_spaces"
     ],
-    "models": ["reference_implementation"],
+    "models": ["red_look"],
     "user_attributes": { "locale": "en_US" }
   }
 

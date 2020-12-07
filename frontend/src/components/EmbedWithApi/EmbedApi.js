@@ -33,6 +33,7 @@ function EmbedApi() {
    * Also on initial dashboard embed, it finds the iframe and sets it to 50% of the page
    */
   const setupDashboard = (dashboard) => {
+    console.log(dashboard)
     document.querySelector('.reload-dashboard').addEventListener('click', async () => {
       await fetch('/api/embed-user/user1/update', { method: 'POST' })
       reloadDashboard(dashboard)
