@@ -11,6 +11,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import EmbedLookSDK from './components/EmbedLookSDK'
 
 const params = {
   examples: [
@@ -53,6 +54,10 @@ const params = {
     {
       text: 'Cors',
       url: '/examples/cors'
+    },
+    {
+      text: 'Embed A Look',
+      url: '/examples/embed-look'
     }
   ]
 } 
@@ -88,6 +93,7 @@ function App() {
         <Route path='/examples/api-query-frontend' component={ApiQueryFrontend} />
         <Route path='/examples/embed-api' component={EmbedWithApi} />
         <Route path='/examples/cors' component={CorsExample} />
+        <Route path='/examples/embed-look' component={EmbedLookSDK} />
       </Switch>
     </Router>
   )
