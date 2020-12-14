@@ -5,6 +5,7 @@ import EmbedWithApi from './components/EmbedWithApi'
 import APIDataContainer from './components/ApiDataBackend'
 import ApiQueryFrontend from './components/ApiQueryFrontend'
 import CorsExample from './components/CorsExample'
+import DashboardExternalFilters from './components/DashboardExternalFilters'
 import {
   BrowserRouter as Router,
   Switch,
@@ -58,6 +59,10 @@ const params = {
     {
       text: 'Embed A Look',
       url: '/examples/embed-look'
+    },
+    {
+      text: 'Embed A Dashboard with External Page Filters',
+      url: '/examples/embed-dashboard-external-filters'
     }
   ]
 } 
@@ -94,6 +99,7 @@ function App() {
         <Route path='/examples/embed-api' component={EmbedWithApi} />
         <Route path='/examples/cors' component={CorsExample} />
         <Route path='/examples/embed-look' component={EmbedLookSDK} />
+        <Route path='/examples/embed-dashboard-external-filters' component={DashboardExternalFilters} />
       </Switch>
     </Router>
   )
