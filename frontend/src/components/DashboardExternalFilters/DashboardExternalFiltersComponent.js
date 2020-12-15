@@ -33,7 +33,12 @@ const Dashboard = styled.div`
 
 LookerEmbedSDK.init(process.env.LOOKER_HOST, "/api/auth");
 
-// inform, warn,positive, critical
+/**
+ * Show a message bar at the top of the page
+ * @param  {Object} props - Properties are just a 'data' object with two keys:
+ * @param {string} props.data.intent - The style of the message - inform, warn, positive or critical
+ * @param {string} props.data.text - The message text
+ */
 const MessagePane = (props) => {
   const messageText = props.data.text || "placeholder text",
     intent = props.data.intent || "inform";
@@ -46,10 +51,72 @@ const MessagePane = (props) => {
   );
 };
 
+/**
+ * A filter pane to display filter options and a run and stop button
+ * Available filters are read from the dashboard with an API call and rendered individually
+ * @param  {Object} props - Object props are 3 functions:
+ * @param  {function} props.handleChange - Pass through filter changes from children to parent
+ * @param  {function} props.runDashboard - Runs the dashboard in the parent component
+ * @param  {function} props.stopDashboard - Stops the dashboard in the parent component
+ */
+const FilterPane = (props) => {
+    const [filterData, setFilterData] = useState(undefined);
+    const [loading, setLoading] = useState(false);
+  
+    useEffect(() => {
+      setLoading(true);
+      sdk
+        .ok(sdk.dashboard(dashboardID))
+        .then((data) => setFilterData(data.dashboard_filters));
+      setLoading(false);
+    }, [dashboardID]);
+  
+    return (
+      <FlexItem m="small" id="filterPane">
+        <h4>Filters</h4>
+        <Space m="medium">
+          {loading && <Spinner />}
+          {filterData &&
+            filterData.map((f, i) => {
+              return (
+                <FilterElement
+                  data={f}
+                  key={i}
+                  handleChange={props.handleChange}
+                />
+              );
+            })}
+        </Space>
+        <Space m="small">
+          <Button id="run-dashboard" onClick={props.runDashboard}>
+            Run Dashboard
+          </Button>
+          <Button
+            id="stop-dashboard"
+            color="critical"
+            onClick={props.stopDashboard}
+          >
+            Stop Dashboard
+          </Button>
+        </Space>
+      </FlexItem>
+    );
+  };
+
+  /**
+ * An individual filter component to render in the filter pane.
+ * The filter information is fetched from the API and the information is passed through as props.data
+ * This helps us understand how to render the filter component.
+ * A good example would be dates as Looker accepts many date formats such as ranges, single dates, relative dates, etc. Here we will only show using a date range.
+ * @param  {Object} props - Contains a data object and a handleChange function
+ * @param  {Object} props.data - The filter information as fetched from the dashboard by API call
+ * @param  {function} props.handleChange - A function passed to the parent to handle filter changes
+ */
 const FilterElement = (props) => {
   const data = props.data;
   const [options, setOptions] = useState([]);
-//   Only used for date selectors
+// Only used for date selectors
+// Better would be parse Looker dash default value and use that
   const [dateChosen, setDateChosen] = useState({
       from: new Date(2020, 11, 1),
       to: new Date(2020, 11, 31)
@@ -81,7 +148,6 @@ const FilterElement = (props) => {
           limit: 500,
         }
   };
-  // console.log(query_data)
   // Fetch suggestions
   useEffect(() => {
     if (!(data?.field?.enumerations || data?.field?.is_timeframe)) {
@@ -104,6 +170,7 @@ const FilterElement = (props) => {
         options={data.field.enumerations || null}
       />
     );
+    // If it's a date range, show a date range selector in a popover
   } else if (data?.field?.is_timeframe) {
     return (
         <Popover
@@ -123,6 +190,7 @@ const FilterElement = (props) => {
             </Popover>
     )
   } else {
+    //   Else show a list of options (values populated by API query)
     return (
       <FieldSelect
         name={data.name}
@@ -135,51 +203,13 @@ const FilterElement = (props) => {
   }
 };
 
-// TODO - dynamically fetch the filters, don't hardcode
-const FilterPane = (props) => {
-  const [filterData, setFilterData] = useState(undefined);
-  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setLoading(true);
-    sdk
-      .ok(sdk.dashboard(dashboardID))
-      .then((data) => setFilterData(data.dashboard_filters));
-    setLoading(false);
-  }, [dashboardID]);
-
-  return (
-    <FlexItem m="small" id="filterPane">
-      <h4>Filters</h4>
-      <Space m="medium">
-        {loading && <Spinner />}
-        {filterData &&
-          filterData.map((f, i) => {
-            return (
-              <FilterElement
-                data={f}
-                key={i}
-                handleChange={props.handleChange}
-              />
-            );
-          })}
-      </Space>
-      <Space m="small">
-        <Button id="run-dashboard" onClick={props.runDashboard}>
-          Run Dashboard
-        </Button>
-        <Button
-          id="stop-dashboard"
-          color="critical"
-          onClick={props.stopDashboard}
-        >
-          Stop Dashboard
-        </Button>
-      </Space>
-    </FlexItem>
-  );
-};
-
+/**
+ * The dashboard component. Uses the SDK to set up a dashboard and attach it to the DOM
+ * @param  {Object} props - props contain 2 functions:
+ * @param {function} props.handleMessages - Pass any messages up to the message component
+ * @param {function} props.setDashboardElement - Pass a ref to the dashboard to the parent so it can be manipulated elsewhere
+ */
 const DashboardPane = (props) => {
   const el = document.querySelector("#dashboardContainer");
 
@@ -194,9 +224,6 @@ const DashboardPane = (props) => {
       .on("dashboard:run:start", () =>
         props.handleMessages({ intent: "inform", text: "Dashboard Running" })
       )
-      .on("dashboard:filters:changed", (e) =>
-        console.log(e?.dashboard?.dashboard_filters)
-      )
       .on("dashboard:run:complete", () =>
         props.handleMessages({
           intent: "positive",
@@ -204,7 +231,7 @@ const DashboardPane = (props) => {
         })
       )
       .withNext()
-      .withTheme("minimal")
+      .withTheme("minimal") // It's a good idea to define a theme that hides the dashboard filters
       .build()
       .connect()
       .then(props.setDashboardElement)
@@ -216,12 +243,15 @@ const DashboardPane = (props) => {
   return (
     <FlexItem m="small" id="dashboardPane">
       <h4>Dashboard</h4>
-      {/* <Dashboard ref={DashboardDiv}></Dashboard> */}
       <Dashboard id="dashboardContainer"></Dashboard>
     </FlexItem>
   );
 };
 
+/** 
+ * The main page component to tie everything together
+ * @param  {Object} props - currently not used
+ */
 const DashboardExternalFiltersComponent = (props) => {
   const [filters, setFilters] = useState({});
   const [messageData, setMessageData] = useState(null);
@@ -260,7 +290,6 @@ const DashboardExternalFiltersComponent = (props) => {
         />
         <DashboardPane
           handleMessages={updateMessages}
-          filters={filters}
           setDashboardElement={setDashboardElement}
         />
       </Flex>
