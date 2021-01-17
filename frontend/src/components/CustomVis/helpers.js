@@ -1,7 +1,7 @@
 const getQueryResponseFromJsonDetail = (jsonDetail) => {
   var queryResponse = {
     data: jsonDetail.data,
-    pivots: jsonDetail.pivots,
+    pivots: jsonDetail.pivots || [],
     fields: {
       pivots: jsonDetail.fields.pivots,
       dimension_like: [

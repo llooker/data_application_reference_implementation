@@ -7,6 +7,13 @@ import {
 } from "@looker/components";
 
 import { getQueryResponseFromJsonDetail } from './helpers'
+import { 
+  getPivots,
+  getDimensions,
+  getMeasures,
+  getDataAndRanges,
+} from './force-bubbles-model'
+import ForceBubbles from './ForceBubbles'
 import { sdk } from "../../helpers/CorsSessionHelper"
 
 
@@ -25,16 +32,16 @@ const CustomVisComponent = () => {
       "products.department",
       "products.category",
       "products.count",
-      "order_items.total_sale_price",
-      "order_items.created_at_year"
+      "order_items.total_sale_price"
     ],
     pivots: [
-      "order_items.created_at_year"
+      "products.department"
     ],
     filters : {
       "order_items.created_at_year": "2 years"
     },
     row_total: "true",
+    limit: 10,
   })
 
   const [resultFormat, setResultFormat] = useState('json_detail')
@@ -42,8 +49,8 @@ const CustomVisComponent = () => {
   const [visModel, setVisModel] = useState({});
 
   const [visConfig, setVisConfig] = useState({
-    colorBy: "products.category",
-    groupBy: "products.department",
+    colorBy: "products.department",
+    groupBy: "products.category",
     sizeBy: "order_items.total_sale_price",
     scale: 1
   });
@@ -66,12 +73,25 @@ const CustomVisComponent = () => {
         })
       )
       console.log('jsonResponse', jsonResponse)
+      const data = jsonResponse.data
       const queryResponse = getQueryResponseFromJsonDetail(jsonResponse)
       console.log('queryResponse', queryResponse)
 
-      var visModel = {}
-      visModel.data = queryResponse.data
-
+      var visModel = {
+        pivot_fields: [],
+        pivot_values: [],
+        dimensions: [],
+        measures: [],
+        data: [],
+        ranges: {}
+      }
+      visModel.pivot_values = queryResponse.pivots.filter(p => p.key !== '$$$_row_total_$$$')
+      getPivots(queryResponse, visModel)
+      getDimensions(queryResponse, visModel)
+      getMeasures(queryResponse, visModel)
+      getDataAndRanges(data, visConfig, visModel)
+      console.log('visModel()', visModel)
+      
       setVisModel(visModel)
       setIsLoading(false)
     } catch (error) {
@@ -85,10 +105,18 @@ const CustomVisComponent = () => {
       {isLoading && <RenderLoading/>}
       {error !== '' && <RenderError message={error}/>}
       {visModel.data?.length > 0 && 
-        <>
-          <Space m="medium">{JSON.stringify(visConfig)}</Space>
-          <Space m="medium">{JSON.stringify(visModel)}</Space>
-        </>
+        <ForceBubbles
+          colorBy={visConfig.colorBy}
+          groupBy={visConfig.groupBy}
+          sizeBy={visConfig.sizeBy}
+          scale={visConfig.scale}
+
+          data={visModel.data}
+          ranges={visModel.ranges}
+          
+          width={1400}
+          height={600}
+        />
       }
     </>
   );
