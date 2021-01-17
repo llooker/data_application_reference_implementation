@@ -5,6 +5,7 @@ import EmbedWithApi from './components/EmbedWithApi'
 import APIDataContainer from './components/ApiDataBackend'
 import ApiQueryFrontend from './components/ApiQueryFrontend'
 import CorsExample from './components/CorsExample'
+import CustomVis from './components/CustomVis'
 import {
   BrowserRouter as Router,
   Switch,

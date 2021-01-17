@@ -2,10 +2,10 @@ import * as React from 'react'
 
 import { ComponentsProvider } from '@looker/components'
 
-import CustomVisComponent from './CustomVisComponent'
+import CustomVisComponent from './CustomVis'
 
 
-const ApiQueryFrontend = (() => {
+const CustomVis = (() => {
   return(
     <ComponentsProvider>
         <CustomVisComponent />

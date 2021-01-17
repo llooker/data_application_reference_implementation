@@ -6,6 +6,7 @@ import {
   Spinner
 } from "@looker/components";
 
+import { getQueryResponseFromJsonDetail } from './helpers'
 import { sdk } from "../../helpers/CorsSessionHelper"
 
 
@@ -17,18 +18,39 @@ const CustomVisComponent = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
-  const [dataset, setDataset] = useState([]);
+  const [queryBody, setQueryBody] = useState({
+    model: "reference_implementation",
+    view: "order_items",
+    fields: [
+      "products.department",
+      "products.category",
+      "products.count",
+      "order_items.total_sale_price",
+      "order_items.created_at_year"
+    ],
+    pivots: [
+      "order_items.created_at_year"
+    ],
+    filters : {
+      "order_items.created_at_year": "2 years"
+    },
+    row_total: "true",
+  })
 
-  const queryBody = {
-    "model": "reference_implementation",
-    "view": "order_items",
-    "fields": ["order_items.status", "order_items.total_sale_price"],
-  }
-  const resultFormat = 'json_detail'
+  const [resultFormat, setResultFormat] = useState('json_detail')
+
+  const [visModel, setVisModel] = useState({});
+
+  const [visConfig, setVisConfig] = useState({
+    colorBy: "products.category",
+    groupBy: "products.department",
+    sizeBy: "order_items.total_sale_price",
+    scale: 1
+  });
 
   useEffect(() => {
     runQuery(queryBody, resultFormat)
-  })
+  }, [queryBody, resultFormat])
   
   /**
    * Gets data using a run_inline_query call
@@ -37,13 +59,20 @@ const CustomVisComponent = () => {
    */
   const runQuery = async (queryBody, resultFormat) => {
     try {
-      const queryResults = await sdk.ok(
+      const jsonResponse = await sdk.ok(
         sdk.run_inline_query({
           body: queryBody, 
           result_format: resultFormat
         })
       )
-      setDataset(queryResults)
+      console.log('jsonResponse', jsonResponse)
+      const queryResponse = getQueryResponseFromJsonDetail(jsonResponse)
+      console.log('queryResponse', queryResponse)
+
+      var visModel = {}
+      visModel.data = queryResponse.data
+
+      setVisModel(visModel)
       setIsLoading(false)
     } catch (error) {
       setIsLoading(false)
@@ -55,7 +84,12 @@ const CustomVisComponent = () => {
     <>
       {isLoading && <RenderLoading/>}
       {error !== '' && <RenderError message={error}/>}
-      {dataset.length > 0 && <Space m="medium">{JSON.stringify(dataset)}</Space>}
+      {visModel.data?.length > 0 && 
+        <>
+          <Space m="medium">{JSON.stringify(visConfig)}</Space>
+          <Space m="medium">{JSON.stringify(visModel)}</Space>
+        </>
+      }
     </>
   );
 }
