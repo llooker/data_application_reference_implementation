@@ -103,6 +103,87 @@ const getMeasures = (queryResponse, visModel) => {
   }
 }
 
+const getConfigOptions = function(model) {
+  const { pivot_fields, dimensions, measures } = model
+
+  var visOptions = {
+    scale: {
+      section: ' Visualization',
+      type: 'number',
+      display: 'range',
+      label: 'Scale Size By',
+      default: 1.0,
+      min: 0.2,
+      max: 2.0,
+      step: 0.2,
+      order: 100000,
+    }
+  }
+
+  // sizeBy
+  var sizeByOptions = [];
+  measures.forEach(measure => {
+      var option = {};
+      option[measure.label] = measure.name;
+      sizeByOptions.push(option);
+  })
+
+  visOptions["sizeBy"] = {
+      section: " Visualization",
+      type: "string",
+      label: "Size By",
+      display: "select",
+      values: sizeByOptions,
+      default: "0",
+      order: 300,
+  }
+
+  // colorByOptions include:
+  // - by dimension
+  // - by pivot key (which are also dimensions)
+  // - by pivot series (one color per column)
+  var colorByOptions = [];
+
+  dimensions.forEach(dimension => {
+      var option = {};
+      option[dimension.label] = dimension.name;
+      colorByOptions.push(option)
+  })
+
+  pivot_fields.forEach(pivot_field => {
+    var option = {};
+    option[pivot_field.label] = pivot_field.name;
+    colorByOptions.push(option)
+  })
+
+  if (pivot_fields.length > 1 ) {
+    colorByOptions.push({'Pivot Series': 'lookerPivotKey'})
+  }
+
+  visOptions["colorBy"] = {
+    section: " Visualization",
+    type: "string",
+    label: "Color By",
+    display: "select",
+    values: colorByOptions,
+    default: "0",
+    order: 100,
+  } 
+
+  /// groupBy
+  visOptions["groupBy"] = {
+    section: " Visualization",
+    type: "string",
+    label: "Group By",
+    display: "select",
+    values: colorByOptions,
+    default: "0",
+    order: 200,
+  } 
+
+  return visOptions
+}
+
 /**
  * 
  * @param {*} data 
@@ -215,4 +296,4 @@ const getDataAndRanges = (data, visConfig, visModel) => {
   }
 }
 
-export { getPivots, getDimensions, getMeasures, getDataAndRanges }
+export { getPivots, getDimensions, getMeasures, getConfigOptions, getDataAndRanges };
