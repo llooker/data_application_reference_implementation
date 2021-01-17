@@ -58,6 +58,10 @@ const params = {
     {
       text: 'Embed A Look',
       url: '/examples/embed-look'
+    },
+    {
+      text: 'Custom Vis',
+      url: '/examples/custom-vis'
     }
   ]
 } 
@@ -94,6 +98,7 @@ function App() {
         <Route path='/examples/embed-api' component={EmbedWithApi} />
         <Route path='/examples/cors' component={CorsExample} />
         <Route path='/examples/embed-look' component={EmbedLookSDK} />
+        <Route path='/examples/custom-vis' component={CustomVis} />
       </Switch>
     </Router>
   )
