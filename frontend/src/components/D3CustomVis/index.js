@@ -2,15 +2,15 @@ import * as React from 'react'
 
 import { ComponentsProvider } from '@looker/components'
 
-import CustomVisComponent from './CustomVis'
+import D3CustomVisComponent from './D3CustomVis'
 
 
-const CustomVis = (() => {
+const D3CustomVis = (() => {
   return(
     <ComponentsProvider>
-        <CustomVisComponent />
+        <D3CustomVisComponent />
     </ComponentsProvider>
   )
 })
 
-export default CustomVis
+export default D3CustomVis

@@ -5,7 +5,7 @@ import EmbedWithApi from './components/EmbedWithApi'
 import APIDataContainer from './components/ApiDataBackend'
 import ApiQueryFrontend from './components/ApiQueryFrontend'
 import CorsExample from './components/CorsExample'
-import CustomVis from './components/CustomVis'
+import D3CustomVis from './components/D3CustomVis'
 import {
   BrowserRouter as Router,
   Switch,
@@ -61,8 +61,8 @@ const params = {
       url: '/examples/embed-look'
     },
     {
-      text: 'Custom Vis',
-      url: '/examples/custom-vis'
+      text: 'D3.js Custom Vis',
+      url: '/examples/d3-custom-vis'
     }
   ]
 } 
@@ -99,7 +99,7 @@ function App() {
         <Route path='/examples/embed-api' component={EmbedWithApi} />
         <Route path='/examples/cors' component={CorsExample} />
         <Route path='/examples/embed-look' component={EmbedLookSDK} />
-        <Route path='/examples/custom-vis' component={CustomVis} />
+        <Route path='/examples/d3-custom-vis' component={D3CustomVis} />
       </Switch>
     </Router>
   )

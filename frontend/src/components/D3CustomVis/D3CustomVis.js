@@ -6,22 +6,22 @@ import {
   Spinner
 } from "@looker/components";
 
+import { sdk } from "../../helpers/CorsSessionHelper"
+
 import { getQueryResponseFromJsonDetail } from './helpers'
 import { 
   getPivots,
   getDimensions,
   getMeasures,
   getDataAndRanges,
-} from './force-bubbles-model'
-import ForceBubbles from './ForceBubbles'
-import { sdk } from "../../helpers/CorsSessionHelper"
-
+} from './ForceBubbles/force-bubbles-model'
+import ForceBubbles from './ForceBubbles/ForceBubbles'
 
 /**
- * Runs a simple query on load (to populate an HTML table)
+ * Displays a custom vis
  * - Uses the Query API: https://docs.looker.com/reference/api-and-integration/api-reference/v4.0/query#run_inline_query
  */
-const CustomVisComponent = () => {
+const D3CustomVisComponent = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
@@ -46,8 +46,6 @@ const CustomVisComponent = () => {
 
   const [resultFormat, setResultFormat] = useState('json_detail')
 
-  const [visModel, setVisModel] = useState({});
-
   const [visConfig, setVisConfig] = useState({
     colorBy: "products.department",
     groupBy: "products.category",
@@ -55,12 +53,17 @@ const CustomVisComponent = () => {
     scale: 1
   });
 
+  const [visModel, setVisModel] = useState({});
+
   useEffect(() => {
     runQuery(queryBody, resultFormat)
   }, [queryBody, resultFormat])
   
   /**
-   * Gets data using a run_inline_query call
+   * 1. Gets data using a run_inline_query call
+   * 2. Converts response into structure used by Looker Custom Visualization plugins
+   * 3. Returns / displays the custom vis
+   * 
    * @param {*} queryBody - Object matching the Query type. Required properties: model, view (explore), fields
    * @param {*} resultFormat - Data response formats: json | json_detail | csv
    */
@@ -72,10 +75,8 @@ const CustomVisComponent = () => {
           result_format: resultFormat
         })
       )
-      console.log('jsonResponse', jsonResponse)
       const data = jsonResponse.data
       const queryResponse = getQueryResponseFromJsonDetail(jsonResponse)
-      console.log('queryResponse', queryResponse)
 
       var visModel = {
         pivot_fields: [],
@@ -90,7 +91,6 @@ const CustomVisComponent = () => {
       getDimensions(queryResponse, visModel)
       getMeasures(queryResponse, visModel)
       getDataAndRanges(data, visConfig, visModel)
-      console.log('visModel()', visModel)
       
       setVisModel(visModel)
       setIsLoading(false)
@@ -131,4 +131,4 @@ const RenderError = (props) => {
 };
 
 
-export default CustomVisComponent
+export default D3CustomVisComponent
