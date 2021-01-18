@@ -43,7 +43,8 @@ const getDimensions = (queryResponse, visModel) => {
       view: dimension.view_label || '',
     }
     
-    visModel.dimensions.push({...dimension, ...field_updates})
+    dimension = {...dimension, ...field_updates}
+    visModel.dimensions.push(dimension)
     visModel.ranges[dimension.name] = { set: [] }
   })
 }
@@ -59,10 +60,11 @@ const getMeasures = (queryResponse, visModel) => {
       is_super: false,
     }
     
-    visModel.measures.push({...measure, ...field_updates}) 
+    measure = {...measure, ...field_updates}
+    visModel.measures.push(measure) 
     visModel.ranges[measure.name] = {
-      min: 100000000,
-      max: 0,
+      min: Number.POSITIVE_INFINITY,
+      max: Number.NEGATIVE_INFINITY,
     }
 
     if (queryResponse.has_row_totals) {
@@ -78,8 +80,8 @@ const getMeasures = (queryResponse, visModel) => {
       }) 
   
       visModel.ranges['$$$_row_total_$$$.' + measure.name] = {
-        min: 100000000,
-        max: 0,
+        min: Number.POSITIVE_INFINITY,
+        max: Number.NEGATIVE_INFINITY,
       }     
     }
   })
@@ -94,10 +96,11 @@ const getMeasures = (queryResponse, visModel) => {
         is_super: true
       }
 
-      visModel.measures.push({...supermeasure, ...field_updates}) 
+      supermeasure = {...supermeasure, ...field_updates}
+      visModel.measures.push(supermeasure) 
       visModel.ranges[supermeasure.name] = {
-        min: 100000000,
-        max: 0,
+        max: Number.POSITIVE_INFINITY,
+        max: Number.NEGATIVE_INFINITY,
       }
     })
   }
@@ -209,8 +212,10 @@ const getDataAndRanges = (data, visConfig, visModel) => {
 
   if (!shouldMeltData) {
     data.forEach(row => {
+      // Set unique identifier per observation
       row.observationId = visModel.dimensions.map(dimension => row[dimension.name].value).join('|')
 
+      // Update ranges for dimensions
       visModel.dimensions.forEach(dimension => {
         var current_set = visModel.ranges[dimension.name].set
         var row_value = row[dimension.name].value
@@ -220,6 +225,7 @@ const getDataAndRanges = (data, visConfig, visModel) => {
         }
       })
 
+      // Update ranges for measures
       visModel.measures.forEach(measure => {
         if (measure.is_row_total) {
           row[measure.name] = row[measure.field_name]['$$$_row_total_$$$']
@@ -240,6 +246,7 @@ const getDataAndRanges = (data, visConfig, visModel) => {
   } else {
     var tidyData = []
     data.forEach(row => {
+      // Update ranges for dimensions
       visModel.dimensions.forEach(dimension => {
         var current_set = visModel.ranges[dimension.name].set
         var row_value = row[dimension.name].value
@@ -249,6 +256,7 @@ const getDataAndRanges = (data, visConfig, visModel) => {
         }
       })
 
+      // Update ranges for measures
       visModel.measures.filter(m => m.is_row_total || m.is_super).forEach(measure => {
         var current_min = visModel.ranges[measure.name].min
         var current_max = visModel.ranges[measure.name].max

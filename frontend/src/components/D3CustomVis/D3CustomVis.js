@@ -55,10 +55,6 @@ const D3CustomVisComponent = () => {
 
   const [visModel, setVisModel] = useState({});
 
-  useEffect(() => {
-    runQuery(queryBody, resultFormat)
-  }, [queryBody, resultFormat])
-  
   /**
    * 1. Gets data using a run_inline_query call
    * 2. Converts response into structure used by Looker Custom Visualization plugins
@@ -100,6 +96,10 @@ const D3CustomVisComponent = () => {
     }
   };
 
+  useEffect(() => {
+    runQuery(queryBody, resultFormat)
+  }, [queryBody, resultFormat])
+  
   return (
     <>
       {isLoading && <RenderLoading/>}
