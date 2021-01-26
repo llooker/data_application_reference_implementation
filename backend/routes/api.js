@@ -6,7 +6,8 @@ var NodeSettings = require('@looker/sdk-rtl/lib/NodeSettings')
 var createSignedUrl = require('../auth/auth_utils')
 
 // Init the Looker SDK using environment variables
-const sdk = NodeAPI.LookerNodeSDK.init40(new NodeSettings.NodeSettings());
+// const sdk = NodeAPI.LookerNodeSDK.init40(new NodeSettings.NodeSettings());
+const sdk = NodeAPI.LookerNodeSDK.init40();
 
 router.get('/me', async (req, res, next) => {
   const me = await sdk.ok(sdk.me())
