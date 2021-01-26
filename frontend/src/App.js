@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import HomePageWithSidebar from './components/HomePageWithSidebar'
 import EmbedSDK from './components/EmbedSDK'
 import EmbedWithApi from './components/EmbedWithApi'
 import APIDataContainer from './components/ApiDataBackend'
 import ApiQueryFrontend from './components/ApiQueryFrontend'
 import CorsExample from './components/CorsExample'
 import D3CustomVis from './components/D3CustomVis'
+import EmbedTwoInstances from './components/EmbedTwoInstances'
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,28 +17,8 @@ import EmbedLookSDK from './components/EmbedLookSDK'
 
 const params = {
   examples: [
-    {    
-        url: '/examples/google-login',
-        user: {
-            private: 'asldhfkshjdafl',
-            public: 'lakshdsl',
-        },
-        text: 'Embed with Google Login'
-    },
-    {
-        url: '/examples/homepage-sidebar',
-        user: {
-            private: 'asldhfkshjdafl',
-            public: 'lakshdsl',
-        },
-        text: 'Homepage with Sidebar'
-    },
     {
       url: '/examples/embed-sdk',
-      user: {
-          private: 'asldhfkshjdafl',
-          public: 'lakshdsl',
-      },
       text: 'Basic Embed with SDK'
     },
     {
@@ -63,6 +44,10 @@ const params = {
     {
       text: 'D3.js Custom Vis',
       url: '/examples/d3-custom-vis'
+    },
+    {
+      text: 'Embed Two',
+      url: '/examples/embed-two'
     }
   ]
 } 
@@ -92,7 +77,6 @@ function App() {
     <Router>
       <Switch>
         <Route path='/' component={SelectExample} exact />
-        <Route path='/examples/homepage-sidebar' component={HomePageWithSidebar} />
         <Route path='/examples/embed-sdk' component={EmbedSDK} />
         <Route path='/examples/api-data-backend' component={APIDataContainer} />
         <Route path='/examples/api-query-frontend' component={ApiQueryFrontend} />
@@ -100,6 +84,7 @@ function App() {
         <Route path='/examples/cors' component={CorsExample} />
         <Route path='/examples/embed-look' component={EmbedLookSDK} />
         <Route path='/examples/d3-custom-vis' component={D3CustomVis} />
+        <Route path='/examples/embed-two' component={EmbedTwoInstances} />
       </Switch>
     </Router>
   )
