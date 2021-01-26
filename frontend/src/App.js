@@ -4,6 +4,7 @@ import EmbedWithApi from './components/EmbedWithApi'
 import APIDataContainer from './components/ApiDataBackend'
 import ApiQueryFrontend from './components/ApiQueryFrontend'
 import CorsExample from './components/CorsExample'
+import DashboardExternalFilters from './components/DashboardExternalFilters'
 import D3CustomVis from './components/D3CustomVis'
 import EmbedTwoInstances from './components/EmbedTwoInstances'
 
@@ -40,6 +41,10 @@ const params = {
     {
       text: 'Embed A Look',
       url: '/examples/embed-look'
+    },
+    {
+      text: 'Embed A Dashboard with External Page Filters',
+      url: '/examples/embed-dashboard-external-filters'
     },
     {
       text: 'D3.js Custom Vis',
@@ -83,6 +88,7 @@ function App() {
         <Route path='/examples/embed-api' component={EmbedWithApi} />
         <Route path='/examples/cors' component={CorsExample} />
         <Route path='/examples/embed-look' component={EmbedLookSDK} />
+        <Route path='/examples/embed-dashboard-external-filters' component={DashboardExternalFilters} />
         <Route path='/examples/d3-custom-vis' component={D3CustomVis} />
         <Route path='/examples/embed-two' component={EmbedTwoInstances} />
       </Switch>
