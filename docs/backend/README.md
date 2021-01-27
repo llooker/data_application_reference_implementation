@@ -1,6 +1,11 @@
+---
+sort: 2
+---
 # Backend
 
-_NOTE: There are no specific requirements for a Looker application. While the reference implementation using JavaScript and Express.js, any choice of language, framework and platform can be used. Looker provides pre-built SDKs in JavaScript/TypeScript, Ruby, Python, C#, Kotlin (Android) and Swift (iOS)._
+```note
+There are no specific requirements for a Looker application. While the reference implementation using JavaScript and Express.js, any choice of language, framework and platform can be used. Looker provides pre-built SDKs in JavaScript/TypeScript, Ruby, Python, C#, Kotlin (Android) and Swift (iOS).
+```
 
 The Looker Data Application Reference Implementation is built in JavaScript and Express.js, to use a single language for the full stack. It serves these main purposes:
 
@@ -24,12 +29,14 @@ Additional examples in Python, Ruby, Java, C# and PHP are available on the [Look
 To support embedding, you must [configure a domain allowlist](https://docs.looker.com/admin-options/platform/embed#embedded_domain_allowlist), and set an [embed secret](https://docs.looker.com/admin-options/platform/embed#embed_secret).
 
 The Looker URL and embed secret should be accessed by your application as environment variables (see below).
+Alternatively, one can retrive signed iframe urls *via* the Looker API method create_sso_embed_url(body). 
 
 ### API Keys for backend API calls
 For backend patterns, where you are accessing Looker's API from the application or server, you must provide the SDK with a Client ID and Secret, plus information about the Looker instance. These should be provided to your application as environment variables (see below)
 
 ### Env variables required by backend
 
+```
 PBL_PORT=3000
 
 LOOKERSDK_API_VERSION=4.0
