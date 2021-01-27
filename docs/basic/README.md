@@ -1,3 +1,6 @@
+---
+sort: 1
+---
 # Basics
 
 Learn the basics of embedding looks, explores, and dashboards. Server side authentication and embed url signing included.

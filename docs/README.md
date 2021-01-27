@@ -1,8 +1,11 @@
-# Looker Data References
+# Looker Data Application Reference Implementation
 
 ## Introduction
 This reference implmenetation is intended to be a library of clarifying examples for building an application with Looker's Developer tools. It covers a range of simple to complex use cases and includes front and back end code.
 
+```tip
+More examples to come. View the roadmap [here](changelog/roadmap)
+```
 
 ## Installation
 To begin:
@@ -47,7 +50,7 @@ LOOKERSDK_EMBED_SECRET=xxxxxxxxxxxxxxxxxxxxxx
 
 Then to boot up the application run:
 
-yarn dev
+`yarn dev`
 
 
 
