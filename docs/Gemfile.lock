@@ -262,9 +262,10 @@ DEPENDENCIES
   jekyll-github-metadata
   jekyll-mentions
   jekyll-readme-index
+  jekyll-remote-theme
   jekyll-rtd-theme
   jekyll-titles-from-headings
   jemoji
 
 BUNDLED WITH
-   2.1.2
+   2.2.6

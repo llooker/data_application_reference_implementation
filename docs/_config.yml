@@ -19,9 +19,14 @@
 # in the templates via {{ site.myvariable }}.
 
 title: Looker Reference Implementation
-email: your-email@example.com
+email: daughertyn@google.com
 description: >- # this means to ignore newlines until "baseurl:"
   This is it
+
+header_pages:
+  - basic/README.md
+  - backend/README.md
+  - advanced/README.md
 
 baseurl: "/data_application_reference_implementation" # the subpath of your site, e.g. /blog
 
@@ -40,6 +45,11 @@ plugins:
   - jekyll-readme-index
   - jekyll-github-metadata
   - jekyll-titles-from-headings
+  - jekyll-remote-theme
+
+readme_index:
+  with_frontmatter: true
+
 
 # Exclude from processing.
 # The following items will not be processed, by default.

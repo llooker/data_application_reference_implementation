@@ -17,18 +17,19 @@ const ApiQueryFrontendComponent = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
-  const [dataset, setDataset] = useState([]);
-
-  const queryBody = {
+  const [queryBody, setQueryBody] = useState({
     "model": "reference_implementation",
     "view": "order_items",
     "fields": ["order_items.status", "order_items.total_sale_price"],
-  }
-  const resultFormat = 'json'
+  })
+  const [resultFormat, setResultFormat] = useState('json')
+  const [dataset, setDataset] = useState([]);
 
   useEffect(() => {
+    console.log('queryBody', queryBody)
+    console.log('resultFormat', resultFormat)
     runQuery(queryBody, resultFormat)
-  })
+  }, [queryBody, resultFormat])
   
   /**
    * Gets data using a run_inline_query call
@@ -36,6 +37,7 @@ const ApiQueryFrontendComponent = () => {
    * @param {*} resultFormat - Data response formats: json | json_detail | csv
    */
   const runQuery = async (queryBody, resultFormat) => {
+    console.log('runQuery()', Date.now())
     try {
       const queryResults = await sdk.ok(
         sdk.run_inline_query({

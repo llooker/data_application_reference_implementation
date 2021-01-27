@@ -6,6 +6,7 @@ import ApiQueryFrontendComponent from './ApiQueryFrontend'
 
 
 const ApiQueryFrontend = (() => {
+  console.log('ApiQueryFrontend()')
   return(
     <ComponentsProvider>
         <ApiQueryFrontendComponent />
