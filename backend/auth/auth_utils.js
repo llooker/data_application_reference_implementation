@@ -91,17 +91,15 @@ function createSignedUrl (
     external_user_id: JSON.stringify(user.external_user_id),
     first_name: JSON.stringify(user.first_name),
     last_name: JSON.stringify(user.last_name),
+    session_length: JSON.stringify(user.session_length),
+    force_logout_login: JSON.stringify(user.force_logout_login),
     permissions: JSON.stringify(user.permissions),
     models: JSON.stringify(user.models),
     group_ids: JSON.stringify(user.group_ids),
-    user_attributes: JSON.stringify(user.user_attributes),
     external_group_id: JSON.stringify(user.external_group_id),
+    user_attributes: JSON.stringify(user.user_attributes),
     access_filters: JSON.stringify(user.access_filters || {}),
     user_timezone: JSON.stringify(user.user_timezone),
-
-    force_logout_login: JSON.stringify(user.force_logout_login),
-    session_length: JSON.stringify(user.session_length),
-
     nonce: jsonNonce,
     time: jsonTime
   }
@@ -126,7 +124,7 @@ function createSignedUrl (
   const signature = signEmbedUrl(signingParams, secret)
 
   Object.assign(params, { signature })
-
+  console.log('signed url - ', `https://${host}${embedPath}?${stringify(params)}`)
   return `https://${host}${embedPath}?${stringify(params)}`
 }
 
