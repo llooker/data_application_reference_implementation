@@ -124,7 +124,6 @@ function createSignedUrl (
   const signature = signEmbedUrl(signingParams, secret)
 
   Object.assign(params, { signature })
-  console.log('signed url - ', `https://${host}${embedPath}?${stringify(params)}`)
   return `https://${host}${embedPath}?${stringify(params)}`
 }
 
