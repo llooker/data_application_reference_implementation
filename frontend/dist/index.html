@@ -1,37 +1,67 @@
 <html>
-
 <head>
   <title>REACT INDEX</title>
   <style>
     body {
       margin: 0;
     }
+    .fullpage {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100vw;
+      height: 100vh;
+    }
     .topbar {
       /* Blue/900 */
       background: #174EA6;
       height: 50px;
+      gap: 16px;
+      width: 100%;
       color: white;
       /* Elevation Light/5 */
       box-shadow: 0px 8px 12px 6px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3);
       display: flex;
       flex-direction: row;
       align-items: center;
-      padding: 6px;
+      padding: 0 16px;
     }
-    .menu-item {
-      padding: 4px;
+    .home_title {
+      font-size: 32px;
+    }
+    .sections {
+      font-size: 16px;
     }
   </style>
 </head>
 
 <body>
-  <div class="topbar">
-    <div>Acme Corp</div>
-    <div class="menu-item">Basics</div>
-    <div class="menu-item">Advanced</div>
+  <div class="fullpage">
+    <div class="topbar">
+      <div class="home_title">Acme Corp</div>
+      <div class="sections">Basics</div>
+      <div class="sections">Advanced</div>
+      <nav aria-label="Main Navigation">
+        <ul>
+          <li><a href="#">About</a></li>
+          <li class="dropdown">
+            <!-- aria-expanded needs managed with Javascript -->
+            <button type="button" class="dropdown__title" aria-expanded="false" aria-controls="sweets-dropdown">
+              Sweets
+            </button>
+            <ul class="dropdown__menu" id="sweets-dropdown">
+              <li><a href="#">Donuts</a></li>
+              <li><a href="#">Cupcakes</a></li>
+              <li><a href="#">Chocolate</a></li>
+              <li><a href="#">Bonbons</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Order</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div id="app" style="width:100%;"></div>
   </div>
-  <div id="app"></div>
   <script src="/pbl.bundle.js"></script>
 </body>
-
 </html>

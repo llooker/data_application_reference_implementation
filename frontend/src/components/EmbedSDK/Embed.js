@@ -42,20 +42,11 @@ const Embed = () => {
     })
   }
 }, [])
+
   return (
     <>
-    <div class="header">
-      <a href="#default" class="logo">Your Portal</a>
-      <div class="header-right">
-        <a class="active" href="#home">Home</a>
-        <a href="#contact">Contact</a>
-        <a href="#about">About</a>
-      </div>
-    </div>
-        <div className='stuff' style={{width: '100%', height: '100%'}}>
-          {/* Step 0) we have a simple container, which performs a callback to our makeDashboard function */}
+        {/* Step 0) we have a simple container, which performs a callback to our makeDashboard function */}
           <Dashboard ref={makeDashboard}></Dashboard>
-        </div>
     </>
   )
 }
