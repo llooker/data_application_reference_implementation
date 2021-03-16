@@ -2,9 +2,31 @@
 
 <head>
   <title>REACT INDEX</title>
+  <style>
+    body {
+      margin: 0;
+    }
+    .topbar {
+      /* Blue/900 */
+      background: #174EA6;
+      height: 50px;
+      color: white;
+      /* Elevation Light/5 */
+      box-shadow: 0px 8px 12px 6px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 6px;
+    }
+  </style>
 </head>
 
 <body>
+  <div class="topbar">
+    <div>Acme Corp</div>
+    <div>Basics</div>
+    <div>Advanced</div>
+  </div>
   <div id="app"></div>
   <script src="/pbl.bundle.js"></script>
 </body>
