@@ -41,10 +41,11 @@ router.post('/embed-user/:id/update', async (req, res) => {
  * Create a signed URL for embedding content
  */
 router.get('/auth', (req, res) => {
+  console.log(req.headers.usertoken);
   const src = req.query.src;
   const host = process.env.LOOKERSDK_EMBED_HOST // Might need to be different than API baseurl (port nums)
   const secret = process.env.LOOKERSDK_EMBED_SECRET
-  const user = config.authenticatedUser
+  const user = config.authenticatedUser[req.headers.usertoken]
   const url = createSignedUrl(src, user, host, secret);
   res.json({ url });
 });
