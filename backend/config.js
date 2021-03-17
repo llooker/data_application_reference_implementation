@@ -29,7 +29,9 @@ config.authenticatedUser =
       "embed_browse_spaces"
     ],
     "models": ["reference_implementation"],
+    // "models": ["atom_fashion"],
     "user_attributes": { "locale": "en_US" }
+    // "user_attributes": { "brand":"Calvin Klein","locale": "en_US" }
   },
   user2: {
     "external_user_id": "user2",
@@ -39,12 +41,15 @@ config.authenticatedUser =
     "force_logout_login": true,
     "external_group_id": "group2",
     "group_ids": [],
+    //user2 has reduced permissions
     "permissions": [
       "access_data",
       "see_looks",
       "see_user_dashboards"
     ],
     "models": ["reference_implementation"],
+    // "models": ["atom_fashion"],
+    //user2 will be localized into a different language
     "user_attributes": { "locale": "es_US" }
   }
 }

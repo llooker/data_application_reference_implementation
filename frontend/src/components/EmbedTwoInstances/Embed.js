@@ -1,46 +1,64 @@
-import React from 'react'
+import React, { useCallback }  from 'react'
 import styled from "styled-components"
-import { LookerEmbedSDK } from '@looker/embed-sdk'
-
-// create iframe of dashboard
-const DashboardDiv = (el) => {
-  LookerEmbedSDK.init(process.env.LOOKERSDK_EMBED_HOST, '/api/auth')
-
-  LookerEmbedSDK.createDashboardWithId(1)
-  .appendTo(el)
-  .withNext()
-  .build()
-  .connect()
-  .then(() => DashboardDiv2())
-  .catch((error) => {
-    console.error('An unexpected error occurred', error)
-  })
-}
-
-const DashboardDiv2 = () => {
-  fetch(`http://localhost:4000/api/auth?src=${encodeURI('/embed/dashboards-next/1?embed_domain=http://localhost:3001&sdk=2')}`)
-  .then(response => response.json())
-  .then(data => DashboardDiv3(data.url))
-}
-
-const DashboardDiv3 = (url) => {
-  LookerEmbedSDK.createDashboardWithUrl(url)
-  .appendTo('#dashboard2')
-  .withNext()
-  .build()
-  .connect()
-  .catch((error) => {
-    console.error('An unexpected error occurred', error)
-  })
-}
+//Alias an additional import of the embed sdk
+import { LookerEmbedSDK, LookerEmbedSDK as LookerEmbedSDK2 } from '@looker/embed-sdk'
 
 const Embed = () => {
+  const makeDashboard = useCallback((el) => {
+    if (el) {
+      el.innerHTML = ''
+    LookerEmbedSDK.init(
+      process.env.LOOKERSDK_EMBED_HOST, 
+      { 
+        url: '/api/auth' 
+       ,headers: [
+           { name: 'usertoken', value: 'user2' }
+           //Pass a value to your backend service to indicate which host to form a URL for
+           ,{ name: 'host', value: 'host1' }
+        ]
+      }
+      )
+    LookerEmbedSDK.createDashboardWithId(20)
+    .appendTo(el)
+    .withNext()
+    .on('dashboard:loaded',(e)=>{alert('Successfully Loaded!')})
+    .build()
+    .connect()
+    .catch((error) => {
+      console.error('An unexpected error occurred', error)
+    })
+  }
+}, [])
+
+const makeDashboard2 = useCallback((el) => {
+  if (el) {
+    el.innerHTML = ''
+  LookerEmbedSDK2.init(
+    process.env.LOOKERSDK_EMBED_HOST, 
+    { 
+      url: '/api/auth' 
+     ,headers: [
+         { name: 'usertoken', value: 'user1' }
+         //Pass a value to your backend service to indicate which host to form a URL for
+         ,{ name: 'host', value: 'host2' }
+      ]
+    }
+    )
+  LookerEmbedSDK2.createDashboardWithId(1)
+  .appendTo(el)
+  .withNext()
+  .on('dashboard:loaded',(e)=>{alert('Successfully Loaded!')})
+  .build()
+  .connect()
+  .catch((error) => {
+    console.error('An unexpected error occurred', error)
+  })
+}
+}, [])
   return (
     <>
-      <div className='stuff' style={{width: '100%', height: '100%'}}>
-        <Dashboard ref={DashboardDiv}></Dashboard>
-        <Dashboard id="dashboard2"></Dashboard>
-      </div>
+          <Dashboard ref={makeDashboard}></Dashboard>
+          <Dashboard ref={makeDashboard2}></Dashboard>
     </>
   )
 }
@@ -53,5 +71,4 @@ const Dashboard = styled.div`
     height: 100%;
   }
 ` 
-
 export default Embed

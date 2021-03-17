@@ -1,10 +1,10 @@
 var express = require('express')
 var config = require('../config') 
 var router = express.Router()
-var NodeAPI = require('@looker/sdk/lib/node')
-var NodeSettings = require('@looker/sdk-rtl/lib/NodeSettings')
-var createSignedUrl = require('../auth/auth_utils')
+const { LookerNodeSDK } = require('@looker/sdk-node')
+const sdk = LookerNodeSDK.init40()
 
+var createSignedUrl = require('../auth/auth_utils')
 
 /*****************************************
  * Authentication                        *
@@ -41,7 +41,6 @@ router.post('/embed-user/:id/update', async (req, res) => {
  * Create a signed URL for embedding content
  */
 router.get('/auth', (req, res) => {
-  console.log(req.headers.usertoken);
   const src = req.query.src;
   const host = process.env.LOOKERSDK_EMBED_HOST // Might need to be different than API baseurl (port nums)
   const secret = process.env.LOOKERSDK_EMBED_SECRET
@@ -54,10 +53,6 @@ router.get('/auth', (req, res) => {
 /****************************************
  * Backend Data API calls               *
  ****************************************/
-
-// Init the Looker SDK using environment variables
-// const sdk = NodeAPI.LookerNodeSDK.init40(new NodeSettings.NodeSettings());
-const sdk = NodeAPI.LookerNodeSDK.init40();
 
 /**
  * Get details of the current authenticated user
@@ -96,10 +91,5 @@ router.get('/looks/:id', async (req, res, next) => {
     })
   res.send(newQueryResults)
   });
-
-
-
-// test endpoint
-router.get('/test', (req, res, next) => res.send(config.api.testResponse))
 
 module.exports = router;

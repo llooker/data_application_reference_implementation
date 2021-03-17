@@ -31,7 +31,7 @@ const Dashboard = styled.div`
   }
 `;
 
-LookerEmbedSDK.init(process.env.LOOKER_HOST, "/api/auth");
+LookerEmbedSDK.init(process.env.LOOKER_HOST, { url: '/api/auth' ,headers: [{ name: 'usertoken', value: 'user1' } ]});
 
 /**
  * Show a message bar at the top of the page
