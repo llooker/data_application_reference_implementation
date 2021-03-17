@@ -29,9 +29,7 @@ config.authenticatedUser =
       "embed_browse_spaces"
     ],
     "models": ["reference_implementation"],
-    // "models": ["atom_fashion"],
     "user_attributes": { "locale": "en_US" }
-    // "user_attributes": { "brand":"Calvin Klein","locale": "en_US" }
   },
   user2: {
     "external_user_id": "user2",
@@ -48,7 +46,6 @@ config.authenticatedUser =
       "see_user_dashboards"
     ],
     "models": ["reference_implementation"],
-    // "models": ["atom_fashion"],
     //user2 will be localized into a different language
     "user_attributes": { "locale": "es_US" }
   }
