@@ -7,6 +7,8 @@ import CorsExample from './components/CorsExample'
 import DashboardExternalFilters from './components/DashboardExternalFilters'
 import D3CustomVis from './components/D3CustomVis'
 import EmbedTwoInstances from './components/EmbedTwoInstances'
+import EmbedExplore from './components/EmbedExplore'
+import DashFilters from './components/DashFilters'
 
 import {
   BrowserRouter as Router,
@@ -53,6 +55,14 @@ const params = {
     {
       text: 'Embed Two',
       url: '/examples/embed-two'
+    },
+    {
+      text: 'Embed Explore',
+      url: '/examples/embed-explore'
+    },
+    {
+      text: 'Dashboard w External Filters',
+      url: '/examples/dash-filters'
     }
   ]
 } 
@@ -91,6 +101,8 @@ function App() {
         <Route path='/examples/embed-dashboard-external-filters' component={DashboardExternalFilters} />
         <Route path='/examples/d3-custom-vis' component={D3CustomVis} />
         <Route path='/examples/embed-two' component={EmbedTwoInstances} />
+        <Route path='/examples/embed-explore' component={EmbedExplore} />
+        <Route path='/examples/dash-filters' component={DashFilters} />
       </Switch>
     </Router>
   )

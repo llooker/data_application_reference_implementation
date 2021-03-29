@@ -16,7 +16,7 @@ const Embed = () => {
       { url: '/api/auth' ,headers: [{ name: 'usertoken', value: 'user1' } ]}
       )
   
-    LookerEmbedSDK.createLookWithId(8)
+    LookerEmbedSDK.createExploreWithId('reference_implementation::order_items')
     .appendTo(el)
     .build()
     .connect()
