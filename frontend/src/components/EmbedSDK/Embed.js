@@ -9,7 +9,6 @@ const Embed = () => {
     /* 
       Step 1) call init() pointing the SDK to a looker host, a service to get the iframe URLs from, and passing user identifying information in the header
       no call to the auth service is made at this step
-      (it assumes you will generally be embedding one Looker host per page, and so these settings are global to the page. For configuring multiple hosts on the same page see: https://github.com/llooker/data_application_reference_implementation/blob/main/frontend/src/components/EmbedTwoInstances/Embed.js )
     */
     LookerEmbedSDK.init(
       process.env.LOOKERSDK_EMBED_HOST, 
@@ -18,7 +17,7 @@ const Embed = () => {
         url: '/api/auth' 
        ,headers: [
            //include some factor which your auth service can use to uniquely identify a user, so that a user specific url can be returned. This could be a token or ID
-           { name: 'usertoken', value: 'user2' } 
+           { name: 'usertoken', value: 'user1' } 
         ]
       }
       )
@@ -42,6 +41,7 @@ const Embed = () => {
     })
   }
 }, [])
+
 
   return (
     <>

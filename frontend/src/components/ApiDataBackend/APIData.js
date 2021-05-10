@@ -139,9 +139,9 @@ const FetchedLooks = (props) => {
 /**
  * Render the main page component
  */
-const APIData = () => {
+const APIData =  () => {
   const [user, setUser] = useState({});
-  const fetchUser = () => {
+  const fetchUser =  () => {
     fetch("/api/me")
       .then((res) => res.json())
       .then((user) => setUser(user));

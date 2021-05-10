@@ -1,14 +1,21 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { sdk } from "../../helpers/CorsSessionHelper"
 
-
-
 const CorsExampleComp = () => {
-  const me = sdk.ok(sdk.me())
+  const [user, setUser] = useState('');
+  useEffect(() => {
+    const apiCall = async () => {
+        const response = await sdk.ok(sdk.me())
+        setUser(response.display_name)
+    }
+    apiCall()
+  },[]);
+
+
   return (
     <>
-      <div className='stuff' style={{width: '100%', height: '100%'}}>
-        { me.display_name }
+      <div style={{width: '100%', height: '100%'}}>
+        {user}
       </div>
     </>
   )

@@ -39,12 +39,14 @@ config.authenticatedUser =
     "force_logout_login": true,
     "external_group_id": "group2",
     "group_ids": [],
+    //user2 has reduced permissions
     "permissions": [
       "access_data",
       "see_looks",
       "see_user_dashboards"
     ],
     "models": ["reference_implementation"],
+    //user2 will be localized into a different language
     "user_attributes": { "locale": "es_US" }
   }
 }

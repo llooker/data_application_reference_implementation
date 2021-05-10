@@ -12,7 +12,7 @@ function EmbedApi() {
    * Gets dashboard with ID 13, can be found in the url by going to the dashboard in your looker instance
    */
   const DashboardDiv = () => {
-    LookerEmbedSDK.init(process.env.LOOKER_HOST, '/api/auth')
+    LookerEmbedSDK.init(process.env.LOOKER_HOST, { url: '/api/auth' ,headers: [{ name: 'usertoken', value: 'user1' } ]})
 
     LookerEmbedSDK.createDashboardWithId(13)
     .appendTo('#lookerdashboard')
