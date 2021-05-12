@@ -1,6 +1,5 @@
 import { Looker40SDK } from "@looker/sdk";
-import { DefaultSettings } from "@looker/sdk-rtl";
-import { AuthToken, AuthSession, BrowserTransport } from "@looker/sdk-rtl";
+import { AuthToken, AuthSession, BrowserTransport, DefaultSettings } from "@looker/sdk-rtl";
 
 
 class PblSession extends AuthSession {
