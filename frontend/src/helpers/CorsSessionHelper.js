@@ -1,4 +1,5 @@
-import { Looker40SDK, DefaultSettings } from "@looker/sdk";
+import { Looker40SDK } from "@looker/sdk";
+import { DefaultSettings } from "@looker/sdk-rtl";
 import { AuthToken, AuthSession, BrowserTransport } from "@looker/sdk-rtl";
 
 
